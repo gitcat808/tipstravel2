@@ -1,51 +1,53 @@
 package com.cn.controller;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.AnnotationConfiguration;
+
+
+import javax.annotation.*;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cn.entity.User;
+import com.cn.service.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	//SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-	//Transaction ts;
+	private UserService userService;
 	
-	public  UserController()
-	{
-		
+	public UserService getUserService() {
+		return userService;
+	}
+	@Resource
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 	
+	@RequestMapping(value="/test")
+	public String test(Model model)
+	{
+		model.addAttribute(new User());
+		System.out.println("enter test to user/add.jsp");
+		return "user/add";
+	}
+
+	
 	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String add(Model model){
-		System.out.println("12345");
+	public String addUser(Model model) {
 		model.addAttribute(new User());
 		return "user/add";
 	}
 	
-	@RequestMapping(value = "/adding",method=RequestMethod.POST)
-	public String addUser(@Validated User user) {
-//		System.out.println("begin");
-//		try {
-//		
-//			 System.out.println("创建sessionFactory成功");  
-//		} catch (Exception e) {
-//			e.printStackTrace();  
-//            System.out.println("创建sessionFactory出错");  
-//		}
-//		Session session = sessionFactory.getCurrentSession();
-//		ts=session.beginTransaction();
-//		session.save(user);
-//		ts.commit();
-//		System.out.println("test usercontroller");
-		
-		return "/user/test";
+	@RequestMapping(value="/add",method=RequestMethod.POST)
+	public String addUser(@Validated User user,BindingResult br)
+	{
+		if(br.hasErrors()) return "user/add";
+		userService.addUser(user);
+		return "user/test";
 	}
+	
 }
