@@ -8,6 +8,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.*;
 
 @Entity
 @Table(name = "user", catalog = "tipstravel")
@@ -92,6 +93,7 @@ public class User {
 	}
 
 	@Column(name = "username")
+	@NotEmpty(message="用户名不能为空")
 	public String getUsername() {
 		return username;
 	}
@@ -101,6 +103,7 @@ public class User {
 	}
 
 	@Column(name = "password")
+	@NotEmpty(message="密码不能为空")
 	public String getPassword() {
 		return password;
 	}
@@ -110,6 +113,7 @@ public class User {
 	}
 
 	@Column(name = "email")
+	@Email(message="邮箱格式不正确")
 	public String getEmail() {
 		return email;
 	}
