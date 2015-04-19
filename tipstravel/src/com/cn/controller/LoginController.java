@@ -36,7 +36,7 @@ public class LoginController {
 		User u = userService.login(email);
 		if(u==null) 
 		{
-			model.addAttribute("message", "用户名不存在");
+			model.addAttribute("message", "用户不存在");
 			return "login";
 		}
 		else if(u.getPassword()!=password)
