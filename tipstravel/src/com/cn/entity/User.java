@@ -19,9 +19,17 @@ public class User {
 	private String email;
 	private Set<Like> useralllikes;
 	private Set<Message> alluserMessages;
-	
+	private String message;
 	private Set<User> allfollowingusermaster;//当前登陆用户关注的人
 	private Set<User> allfollowinguseranother;//任意一个其他用户关注的人
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	@OneToMany(mappedBy = "user",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
@@ -37,6 +45,12 @@ public class User {
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	public Set<Message> getAlluserMessages() {
 		return alluserMessages;
+	}
+
+	@Override
+	public String toString() {
+		return "User [user_id=" + user_id + ", username=" + username
+				+ ", password=" + password + ", email=" + email + "]";
 	}
 
 	public void setAlluserMessages(Set<Message> alluserMessages) {
@@ -108,12 +122,19 @@ public class User {
 		return password;
 	}
 
+//	@Override
+//	public boolean equals(Object obj) {
+//		// TODO Auto-generated method stub
+//		return super.equals(obj);
+//	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	@Column(name = "email")
 	@Email(message="邮箱格式不正确")
+	
 	public String getEmail() {
 		return email;
 	}
@@ -121,4 +142,5 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 }

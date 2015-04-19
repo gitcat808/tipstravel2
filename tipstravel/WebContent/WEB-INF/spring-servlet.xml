@@ -26,5 +26,12 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
+<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+ <property name="messageConverters">  
+  <list>  
+   <bean  
+    class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />  
+  </list>  
+ </property>  
+</bean> 
 </beans>

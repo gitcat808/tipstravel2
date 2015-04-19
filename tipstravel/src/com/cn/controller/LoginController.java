@@ -5,8 +5,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cn.entity.User;
@@ -25,30 +27,44 @@ public class LoginController {
 		this.userService = userService;
 	}
 	
-	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public String login() {
-		return "login";
-	}
+//	@RequestMapping(value="/login",method=RequestMethod.GET)
+//	public String login() {
+//		return "login";
+//	}
 
+	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(String email,String password,Model model)
+	public @ResponseBody User login(@RequestBody User user)
 	{
-		User u = userService.login(email);
+		
+		User u = userService.login(user.getEmail());
+//		System.out.println(u);
+//		System.out.println("login check");
+		//System.out.println((u.getPassword()).equals(password));
 		if(u==null) 
 		{
-			model.addAttribute("message", "用户不存在");
-			return "login";
+			user.setMessage("用户名不存在");
+			System.out.println(user);
+			return user;
+			
+			//System.out.println(user);
+			//return "/login";
 		}
-		else if(u.getPassword()!=password)
+		
+		else if(!(u.getPassword()).equals(user.getPassword()))
 		{
-			model.addAttribute("message", "密码错误");
+			System.out.println(u.getPassword());
+			System.out.println(user.getPassword());
+			user.setMessage("密码不正确");
+			return user;
+			//return "/login";
 		}
 		else
 		{
-			model.addAttribute("loginUser", u);
-			model.addAttribute("message", "登陆成功");
+			u.setMessage("登陆成功");		
 		}
-		return "redirect:/user/test";
+		return u;
+		
 	}
 	
 	@RequestMapping(value="/logout")

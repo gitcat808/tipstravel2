@@ -8,7 +8,7 @@
 </head>
 <body>
  add success
- {$message}
- welcome{$loginUser.username}
+ ${message}
+ welcome${loginUser.username}
 </body>
 </html>

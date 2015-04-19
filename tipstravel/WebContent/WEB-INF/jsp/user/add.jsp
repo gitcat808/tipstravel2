@@ -9,23 +9,6 @@
 </head>
 <body>
 
-	<sf:form method="post" modelAttribute="user" action="/tipstravel/user/add">
-<table width="700" align="center" border="1">
-	<tr>
-	<td>用户名：</td><td><sf:input path="username"/><sf:errors path="username"/></td>
-	</tr>
-	<tr>
-	<td>密码：</td><td><sf:password path="password"/><sf:errors path="password"/></td>
-	</tr>
-	<tr>
-	<td>邮箱：</td><td><sf:input path="email"/><sf:errors path="email"/></td>
-	</tr>
-	<tr>
-	<td colspan="2">
-		<input type="submit" value="用户添加"/>
-	</td>
-	</tr>
-</table>
-</sf:form>
+	
 </body>
 </html>
