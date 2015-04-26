@@ -34,9 +34,11 @@ public class LoginController {
 
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public @ResponseBody User login(@RequestBody User user)
+	public @ResponseBody User login(@RequestBody  User user)
 	{
 		
+		System.out.println("aaaaaaaaaaaaaaaaaa");
+//		return null;
 		User u = userService.login(user.getEmail());
 //		System.out.println(u);
 //		System.out.println("login check");
