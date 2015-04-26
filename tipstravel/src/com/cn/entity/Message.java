@@ -14,7 +14,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Message {
 	private int message_id;
 	private String context;
-	private Byte[] image;
+	private String image;
 	private Date message_date;
 	private Tag tag;
 	private User user;
@@ -69,10 +69,10 @@ public class Message {
 	}
 	@Column(name="image")
 	@Lob
-	public Byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
-	public void setImage(Byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	
