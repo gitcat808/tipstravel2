@@ -33,7 +33,7 @@ public class Message {
 	public void setMessagealllikes(Set<Like> messagealllikes) {
 		this.messagealllikes = messagealllikes;
 	}
-	@ManyToOne(fetch=FetchType.LAZY) // ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
+	@ManyToOne // ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
 	@JoinColumn(name="user_id")
 	public User getUser() {
 		return user;
@@ -42,7 +42,7 @@ public class Message {
 		this.user = user;
 	}
 	
-	@ManyToOne(fetch=FetchType.LAZY) // ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
+	@ManyToOne// ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
 	@JoinColumn(name="tag_id")
 	public Tag getTag() {
 		return tag;
@@ -68,7 +68,6 @@ public class Message {
 		this.context = context;
 	}
 	@Column(name="image")
-	@Lob
 	public String getImage() {
 		return image;
 	}
@@ -83,6 +82,14 @@ public class Message {
 	}
 	public void setMessage_date(Date message_date) {
 		this.message_date = message_date;
+	}
+
+	@Override
+	public String toString() {
+		return "Message [message_id=" + message_id + ", context=" + context
+				+ ", image=" + image + ", message_date=" + message_date
+				+ ", tag=" + tag + ", user=" + user + ", messagealllikes="
+				+ messagealllikes + "]";
 	}
 	
 		
