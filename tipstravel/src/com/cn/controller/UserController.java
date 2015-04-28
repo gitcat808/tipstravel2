@@ -30,11 +30,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/test")
-	public String test(Model model)
+	public void test(Model model)
 	{
-		model.addAttribute(new User());
-		System.out.println("enter test to user/add.jsp");
-		return "user/add";
+		System.out.println("test");
 	}
 
 	

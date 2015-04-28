@@ -13,19 +13,19 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Tag {
 	private int tag_id;
 	private String tag_name;
-	private Set<Message> alltagmessages;
+	private Set<Tag_Message> tag_message;
 	
 	public Tag(){
-		alltagmessages=new HashSet<Message>();
+		tag_message=new HashSet<Tag_Message>();
 	}
 	
 	@OneToMany(mappedBy="tag",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA) //LazyCollection属性设置成EXTRA指定了当如果查询数据的个数时候，只会发出一条 count(*)的语句，提高性能
-	public Set<Message> getAlltagmessages() {
-		return alltagmessages;
+	public Set<Tag_Message> getTag_message() {
+		return tag_message;
 	}
-	public void setAlltagmessages(Set<Message> alltagmessages) {
-		this.alltagmessages = alltagmessages;
+	public void setTag_message(Set<Tag_Message> tag_message) {
+		this.tag_message = tag_message;
 	}
 	
 	@Id

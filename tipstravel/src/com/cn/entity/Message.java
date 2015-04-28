@@ -16,15 +16,27 @@ public class Message {
 	private String context;
 	private String image;
 	private Date message_date;
-	private Tag tag;
+	private Set<Tag_Message> tag_message;
 	private User user;
 	private Set<Like> messagealllikes;
 	
 	public Message()
 	{
 		messagealllikes=new HashSet<Like>();
+		tag_message=new HashSet<Tag_Message>();
 	}
 	
+	
+	@OneToMany(mappedBy="message",cascade=CascadeType.REMOVE)
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	public Set<Tag_Message> getTag_message() {
+		return tag_message;
+	}
+
+	public void setTag_message(Set<Tag_Message> tag_message) {
+		this.tag_message = tag_message;
+	}
+
 	@OneToMany(mappedBy="message",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	public Set<Like> getMessagealllikes() {
@@ -33,6 +45,7 @@ public class Message {
 	public void setMessagealllikes(Set<Like> messagealllikes) {
 		this.messagealllikes = messagealllikes;
 	}
+	
 	@ManyToOne // ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
 	@JoinColumn(name="user_id")
 	public User getUser() {
@@ -42,14 +55,7 @@ public class Message {
 		this.user = user;
 	}
 	
-	@ManyToOne// ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
-	@JoinColumn(name="tag_id")
-	public Tag getTag() {
-		return tag;
-	}
-	public void setTag(Tag tag) {
-		this.tag = tag;
-	}
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="message_id")
@@ -84,13 +90,13 @@ public class Message {
 		this.message_date = message_date;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Message [message_id=" + message_id + ", context=" + context
 				+ ", image=" + image + ", message_date=" + message_date
-				+ ", tag=" + tag + ", user=" + user + ", messagealllikes="
-				+ messagealllikes + "]";
+				+ ", tag_message=" + tag_message + ", user=" + user
+				+ ", messagealllikes=" + messagealllikes + "]";
 	}
-	
-		
+
 }
