@@ -1,12 +1,11 @@
-package com.cn.dao;
+package com.cn.service;
 
 import java.util.List;
 
 import com.cn.entity.Message;
 import com.cn.entity.PaginationSupport;
 
-public interface MessageDao {
-
+public interface MessageService {
 	public void addMessage(Message message);
 	public void deleteMessage(int messageid);
 	public Message loadbyid(int messageid);

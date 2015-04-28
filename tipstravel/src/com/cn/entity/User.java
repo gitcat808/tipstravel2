@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.*;
@@ -20,8 +19,8 @@ public class User {
 	private Set<Like> useralllikes;
 	private Set<Message> alluserMessages;
 	private String message;
-	private Set<User> allfollowingusermaster;//当前登陆用户关注的人
-	private Set<User> allfollowinguseranother;//任意一个其他用户关注的人
+	private Set<User_Following> allfollowingusermaster;//当前登陆用户关注的人
+	private Set<User_Following> allfollowinguseranother;//任意一个其他用户关注的人
 
 	public String getMessage() {
 		return message;
@@ -31,7 +30,7 @@ public class User {
 		this.message = message;
 	}
 
-	@OneToMany(mappedBy = "user",cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	public Set<Like> getUseralllikes() {
 		return useralllikes;
@@ -41,7 +40,7 @@ public class User {
 		this.useralllikes = useralllikes;
 	}
 
-	@OneToMany(mappedBy = "user",cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	public Set<Message> getAlluserMessages() {
 		return alluserMessages;
@@ -58,32 +57,29 @@ public class User {
 	}
 
 	public User() {
-		allfollowingusermaster = new HashSet<User>();
-		allfollowinguseranother = new HashSet<User>();
+		allfollowingusermaster = new HashSet<User_Following>();
+		allfollowinguseranother = new HashSet<User_Following>();
 		useralllikes = new HashSet<Like>();
 		alluserMessages = new HashSet<Message>();
 	}
 
-	@ManyToMany(mappedBy="allfollowinguseranother")
-	public Set<User> getAllfollowingusermaster() {
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	public Set<User_Following> getAllfollowingusermaster() {
 		return allfollowingusermaster;
 	}
 
-	public void setAllfollowingusermaster(Set<User> allfollowingusermaster) {
+	public void setAllfollowingusermaster(Set<User_Following> allfollowingusermaster) {
 		this.allfollowingusermaster = allfollowingusermaster;
 	}
 	
-	@ManyToMany
-	@JoinTable(
-			name="user_following",
-			joinColumns={@JoinColumn(name="user_id",referencedColumnName="user_id")},
-			inverseJoinColumns={@JoinColumn(name="following_id",referencedColumnName="user_id")}
-			)
-	public Set<User> getAllfollowinguseranother() {
+	@OneToMany(mappedBy="followinguser",cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	public Set<User_Following> getAllfollowinguseranother() {
 		return allfollowinguseranother;
 	}
 
-	public void setAllfollowinguseranother(Set<User> allfollowinguseranother) {
+	public void setAllfollowinguseranother(Set<User_Following> allfollowinguseranother) {
 		this.allfollowinguseranother = allfollowinguseranother;
 	}
 
@@ -122,11 +118,6 @@ public class User {
 		return password;
 	}
 
-//	@Override
-//	public boolean equals(Object obj) {
-//		// TODO Auto-generated method stub
-//		return super.equals(obj);
-//	}
 
 	public void setPassword(String password) {
 		this.password = password;
