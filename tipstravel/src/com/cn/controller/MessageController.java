@@ -5,12 +5,16 @@ import java.util.Iterator;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cn.entity.Fetchmessage_info;
 import com.cn.entity.Message;
 import com.cn.entity.PaginationSupport;
 import com.cn.entity.User;
+import com.cn.entity.Fetchmessage_info;
 import com.cn.service.MessageService;
 import com.cn.service.UserService;
 
@@ -49,19 +53,30 @@ public class MessageController {
 		messageService.addMessage(message);
 	}
 	
-	@RequestMapping("/homepage")
-	public PaginationSupport showhomepage(int userid,int startindex)
-	{
-		PaginationSupport ps=messageService.showhome(userid,startindex);
+	@RequestMapping(value="/homepage",method=RequestMethod.POST)
+	public @ResponseBody PaginationSupport showhomepage(@RequestBody Fetchmessage_info fetchmessage_info)
+	{	
+		//System.out.println("lalallalaalla");
+//		System.out.println(fetchmessage_info.getUserid());
+//		System.out.println(fetchmessage_info.getStartindex());
+		PaginationSupport ps=messageService.showhome(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
+		
 		if(ps!=null)ps.setMessage("返回成功");
 		else ps.setMessage("返回失败");
+		Iterator iterator=ps.getData().iterator();
+		while(iterator.hasNext())
+		{
+			Message message=(Message)iterator.next();
+			System.out.println(message);
+		}
+//		System.out.println("enddddd");
 		return ps;
 	}
 	
 	@RequestMapping("/following")
-	public PaginationSupport showfollowing(int userid,int startindex)
+	public @ResponseBody PaginationSupport showfollowing(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
-		PaginationSupport ps=messageService.showfollowing(userid, startindex);
+		PaginationSupport ps=messageService.showfollowing(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
 		if(ps!=null)ps.setMessage("返回成功");
 		else ps.setMessage("返回失败");
 //		System.out.println(ps);

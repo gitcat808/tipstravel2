@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -21,9 +22,11 @@ public class Tag {
 	
 	@OneToMany(mappedBy="tag",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA) //LazyCollection属性设置成EXTRA指定了当如果查询数据的个数时候，只会发出一条 count(*)的语句，提高性能
+	@JsonManagedReference
 	public Set<Tag_Message> getTag_message() {
 		return tag_message;
 	}
+	@JsonManagedReference
 	public void setTag_message(Set<Tag_Message> tag_message) {
 		this.tag_message = tag_message;
 	}

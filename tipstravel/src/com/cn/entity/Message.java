@@ -4,8 +4,22 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -29,10 +43,11 @@ public class Message {
 	
 	@OneToMany(mappedBy="message",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
+	@JsonManagedReference
 	public Set<Tag_Message> getTag_message() {
 		return tag_message;
 	}
-
+	@JsonManagedReference
 	public void setTag_message(Set<Tag_Message> tag_message) {
 		this.tag_message = tag_message;
 	}
@@ -48,9 +63,11 @@ public class Message {
 	
 	@ManyToOne // ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
 	@JoinColumn(name="user_id")
+    @JsonBackReference
 	public User getUser() {
 		return user;
 	}
+	@JsonBackReference
 	public void setUser(User user) {
 		this.user = user;
 	}

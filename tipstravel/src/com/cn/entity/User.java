@@ -3,23 +3,37 @@ package com.cn.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.validator.constraints.*;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "user", catalog = "tipstravel")
+@JsonIgnoreProperties(value={"allfollowingusermaster"}) 
 public class User {
 	private int user_id;
 	private String username;
 	private String password;
 	private String email;
 	private Set<Like> useralllikes;
+	
 	private Set<Message> alluserMessages;
 	private String message;
+	
 	private Set<User_Following> allfollowingusermaster;//当前登陆用户关注的人
+	
 	private Set<User_Following> allfollowinguseranother;//任意一个其他用户关注的人
 
 	public String getMessage() {
@@ -42,8 +56,14 @@ public class User {
 
 	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
+	@JsonManagedReference
 	public Set<Message> getAlluserMessages() {
 		return alluserMessages;
+	}
+
+	@JsonManagedReference
+	public void setAlluserMessages(Set<Message> alluserMessages) {
+		this.alluserMessages = alluserMessages;
 	}
 
 	@Override
@@ -51,11 +71,8 @@ public class User {
 		return "User [user_id=" + user_id + ", username=" + username
 				+ ", password=" + password + ", email=" + email + "]";
 	}
-
-	public void setAlluserMessages(Set<Message> alluserMessages) {
-		this.alluserMessages = alluserMessages;
-	}
-
+	
+	
 	public User() {
 		allfollowingusermaster = new HashSet<User_Following>();
 		allfollowinguseranother = new HashSet<User_Following>();
@@ -65,20 +82,22 @@ public class User {
 
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
+	@JsonManagedReference
 	public Set<User_Following> getAllfollowingusermaster() {
 		return allfollowingusermaster;
 	}
-
+	@JsonManagedReference
 	public void setAllfollowingusermaster(Set<User_Following> allfollowingusermaster) {
 		this.allfollowingusermaster = allfollowingusermaster;
 	}
 	
 	@OneToMany(mappedBy="followinguser",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
+	@JsonManagedReference
 	public Set<User_Following> getAllfollowinguseranother() {
 		return allfollowinguseranother;
 	}
-
+	@JsonManagedReference
 	public void setAllfollowinguseranother(Set<User_Following> allfollowinguseranother) {
 		this.allfollowinguseranother = allfollowinguseranother;
 	}
