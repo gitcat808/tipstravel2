@@ -73,7 +73,7 @@ public class MessageController {
 		return ps;
 	}
 	
-	@RequestMapping("/following")
+	@RequestMapping(value="/following",method=RequestMethod.POST)
 	public @ResponseBody PaginationSupport showfollowing(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
 		PaginationSupport ps=messageService.showfollowing(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
