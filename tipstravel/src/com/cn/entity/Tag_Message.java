@@ -6,8 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="tag_message")
@@ -28,22 +27,22 @@ public class Tag_Message {
 	
 	@ManyToOne
 	@JoinColumn(name="tag_id")
-	@JsonBackReference
 	public Tag getTag() {
 		return tag;
 	}
-	@JsonBackReference
+	
 	public void setTag(Tag tag) {
 		this.tag = tag;
 	}
 	
 	@ManyToOne
 	@JoinColumn(name="message_id")
-	@JsonBackReference
+	@JsonIgnore
 	public Message getMessage() {
 		return message;
 	}
-	@JsonBackReference
+	
+	@JsonIgnore
 	public void setMessage(Message message) {
 		this.message = message;
 	}

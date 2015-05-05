@@ -6,20 +6,21 @@ import javax.annotation.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cn.entity.User;
+import com.cn.entity.User_Following;
+import com.cn.service.UserFollowingService;
 import com.cn.service.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	private UserService userService;
+	private UserFollowingService userFollowingService;
 	
 	public UserService getUserService() {
 		return userService;
@@ -29,12 +30,13 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@RequestMapping(value="/test")
-	public void test(Model model)
-	{
-		System.out.println("test");
+	public UserFollowingService getUserFollowingService() {
+		return userFollowingService;
 	}
-
+	@Resource
+	public void setUserFollowingService(UserFollowingService userFollowingService) {
+		this.userFollowingService = userFollowingService;
+	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String addUser(Model model) {
@@ -45,11 +47,6 @@ public class UserController {
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public @ResponseBody User addUser(@RequestBody User user)
 	{
-//		if(br.hasErrors()) //return "user/add";
-//		{
-//			user.setMessage("注册不成功");
-//			return user;
-//		}
 		System.out.println("come");
 		User user_load_by_email=userService.loadbyemail(user.getEmail());
 		if(user_load_by_email!=null)
@@ -66,6 +63,24 @@ public class UserController {
 		userService.addUser(user);
 		user.setMessage("注册成功");
 		return user;
+	}
+	
+	@RequestMapping(value="/follow")
+	public void followUser(int userid,int followingid)
+	{
+		User user=userService.loadbyid(userid);
+		User followingUser=userService.loadbyid(followingid);
+		User_Following user_Following=new User_Following(user,followingUser);
+		userFollowingService.follow(user_Following);
+	}
+	
+	@RequestMapping(value="/unfollow")
+	public void unfollowUser(int userid,int followingid)
+	{
+		User user=userService.loadbyid(userid);
+		User followingUser=userService.loadbyid(followingid);
+		User_Following user_Following=new User_Following(user,followingUser);
+		userFollowingService.unfollow(user_Following);
 	}
 	
 }

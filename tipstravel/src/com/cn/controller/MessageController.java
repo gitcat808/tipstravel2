@@ -53,23 +53,19 @@ public class MessageController {
 		messageService.addMessage(message);
 	}
 	
+	@SuppressWarnings("null")
 	@RequestMapping(value="/homepage",method=RequestMethod.POST)
 	public @ResponseBody PaginationSupport showhomepage(@RequestBody Fetchmessage_info fetchmessage_info)
 	{	
-		//System.out.println("lalallalaalla");
-//		System.out.println(fetchmessage_info.getUserid());
-//		System.out.println(fetchmessage_info.getStartindex());
 		PaginationSupport ps=messageService.showhome(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
-		
 		if(ps!=null)ps.setMessage("返回成功");
 		else ps.setMessage("返回失败");
-		Iterator iterator=ps.getData().iterator();
-		while(iterator.hasNext())
-		{
-			Message message=(Message)iterator.next();
-			System.out.println(message);
-		}
-//		System.out.println("enddddd");
+//		Iterator iterator=ps.getData().iterator();
+//		while(iterator.hasNext())
+//		{
+//			Message message=(Message)iterator.next();
+//			System.out.println(message);
+//		}
 		return ps;
 	}
 	
@@ -87,5 +83,11 @@ public class MessageController {
 //			System.out.println(message);
 //		}
 		return ps;
+	}
+	
+	@RequestMapping(value="/like")
+	public void likemessage(int userid,int messageid)
+	{
+		
 	}
 }

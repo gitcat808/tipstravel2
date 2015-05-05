@@ -16,10 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -29,10 +26,11 @@ public class Message {
 	private int message_id;
 	private String context;
 	private String image;
-	private Date message_date;
+	private String message_date;
 	private Set<Tag_Message> tag_message;
 	private User user;
 	private Set<Like> messagealllikes;
+	private String like_count;
 	
 	public Message()
 	{
@@ -43,31 +41,32 @@ public class Message {
 	
 	@OneToMany(mappedBy="message",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
-	@JsonManagedReference
 	public Set<Tag_Message> getTag_message() {
 		return tag_message;
 	}
-	@JsonManagedReference
+	
 	public void setTag_message(Set<Tag_Message> tag_message) {
 		this.tag_message = tag_message;
 	}
 
 	@OneToMany(mappedBy="message",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
+	@JsonIgnore
 	public Set<Like> getMessagealllikes() {
 		return messagealllikes;
 	}
+	
+	@JsonIgnore
 	public void setMessagealllikes(Set<Like> messagealllikes) {
 		this.messagealllikes = messagealllikes;
 	}
 	
 	@ManyToOne // ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
 	@JoinColumn(name="user_id")
-    @JsonBackReference
 	public User getUser() {
 		return user;
 	}
-	@JsonBackReference
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -99,12 +98,21 @@ public class Message {
 	}
 	
 	@Column(name="message_date")
-	@Temporal(TemporalType.TIME)
-	public Date getMessage_date() {
+	public String getMessage_date() {
 		return message_date;
 	}
-	public void setMessage_date(Date message_date) {
+	public void setMessage_date(String message_date) {
 		this.message_date = message_date;
+	}
+
+	@Column(name="like_count")
+	public String getLike_count() {
+		return like_count;
+	}
+
+
+	public void setLike_count(String like_count) {
+		this.like_count = like_count;
 	}
 
 
@@ -113,7 +121,8 @@ public class Message {
 		return "Message [message_id=" + message_id + ", context=" + context
 				+ ", image=" + image + ", message_date=" + message_date
 				+ ", tag_message=" + tag_message + ", user=" + user
-				+ ", messagealllikes=" + messagealllikes + "]";
+				+ ", messagealllikes=" + messagealllikes + ", like_count="
+				+ like_count + "]";
 	}
 
 }

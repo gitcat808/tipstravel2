@@ -38,19 +38,25 @@ public class TagDaoImpl extends HibernateDaoSupport implements TagDao {
 	}
 
 	@Override
-	public PaginationSupport searchbytag(int tagid, int startindex) {
+	public PaginationSupport searchbytag(String tagname, int startindex) {
 		Query query=this.getSession().createQuery("from Message as m"
 				+ " where m.message_id in"
 				+" (select tm.message_id from Tag_Message as tm"
-				+ " where tm.tag_id=?)"
+				+ " where tm.tag_name=?)"
 				+ " order by m.message_date DESC");
-		query.setParameter(0, tagid);
+		query.setParameter(0, tagname);
 		query.setFirstResult(startindex).setMaxResults(20);
 		@SuppressWarnings("unchecked")
 		List<Message> data=query.list();
 		PaginationSupport ps=new PaginationSupport();
 		ps.setData(data);
 		return ps;
+	}
+
+	@Override
+	public Tag loadbyname(String tagname) {
+		return (Tag)this.getSession().createQuery("from Tag where tag_name=?")
+				.setParameter(0, tagname).uniqueResult();
 	}
 
 }

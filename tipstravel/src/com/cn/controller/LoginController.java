@@ -33,33 +33,28 @@ public class LoginController {
 //	}
 
 	
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public @ResponseBody User login(@RequestBody  User user)
 	{
-		
-		System.out.println("aaaaaaaaaaaaaaaaaa");
-//		return null;
+		System.out.println("enter login");
+		System.out.println("user password:"+user.getPassword());
 		User u = userService.login(user.getEmail());
-//		System.out.println(u);
-//		System.out.println("login check");
-		//System.out.println((u.getPassword()).equals(password));
+		System.out.println(u);
+		String u_password=u.getPassword();
+		System.out.println("u password:"+u_password);
+		
 		if(u==null) 
 		{
 			user.setMessage("用户名不存在");
 			System.out.println(user);
 			return user;
-			
-			//System.out.println(user);
-			//return "/login";
 		}
-		
+				
 		else if(!(u.getPassword()).equals(user.getPassword()))
 		{
-			System.out.println(u.getPassword());
-			System.out.println(user.getPassword());
 			user.setMessage("密码不正确");
 			return user;
-			//return "/login";
 		}
 		else
 		{

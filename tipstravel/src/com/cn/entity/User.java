@@ -12,28 +12,23 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonManagedReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "user", catalog = "tipstravel")
-@JsonIgnoreProperties(value={"allfollowingusermaster"}) 
+
 public class User {
 	private int user_id;
 	private String username;
 	private String password;
 	private String email;
 	private Set<Like> useralllikes;
-	
 	private Set<Message> alluserMessages;
 	private String message;
-	
+	private String avatar;
 	private Set<User_Following> allfollowingusermaster;//当前登陆用户关注的人
-	
 	private Set<User_Following> allfollowinguseranother;//任意一个其他用户关注的人
 
 	public String getMessage() {
@@ -46,33 +41,28 @@ public class User {
 
 	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
+	@JsonIgnore
 	public Set<Like> getUseralllikes() {
 		return useralllikes;
 	}
-
+	
+	@JsonIgnore
 	public void setUseralllikes(Set<Like> useralllikes) {
 		this.useralllikes = useralllikes;
 	}
 
 	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
-	@JsonManagedReference
+	@JsonIgnore
 	public Set<Message> getAlluserMessages() {
 		return alluserMessages;
 	}
 
-	@JsonManagedReference
+	@JsonIgnore
 	public void setAlluserMessages(Set<Message> alluserMessages) {
 		this.alluserMessages = alluserMessages;
 	}
 
-	@Override
-	public String toString() {
-		return "User [user_id=" + user_id + ", username=" + username
-				+ ", password=" + password + ", email=" + email + "]";
-	}
-	
-	
 	public User() {
 		allfollowingusermaster = new HashSet<User_Following>();
 		allfollowinguseranother = new HashSet<User_Following>();
@@ -82,33 +72,27 @@ public class User {
 
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
-	@JsonManagedReference
+	@JsonIgnore
 	public Set<User_Following> getAllfollowingusermaster() {
 		return allfollowingusermaster;
 	}
-	@JsonManagedReference
+	@JsonIgnore
 	public void setAllfollowingusermaster(Set<User_Following> allfollowingusermaster) {
 		this.allfollowingusermaster = allfollowingusermaster;
 	}
 	
 	@OneToMany(mappedBy="followinguser",cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.EXTRA)
-	@JsonManagedReference
+	@JsonIgnore
 	public Set<User_Following> getAllfollowinguseranother() {
 		return allfollowinguseranother;
 	}
-	@JsonManagedReference
+	
+	@JsonIgnore
 	public void setAllfollowinguseranother(Set<User_Following> allfollowinguseranother) {
 		this.allfollowinguseranother = allfollowinguseranother;
 	}
 
-	public User(int user_id, String username, String password, String email) {
-		super();
-		this.user_id = user_id;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -122,7 +106,6 @@ public class User {
 	}
 
 	@Column(name = "username")
-	@NotEmpty(message="用户名不能为空")
 	public String getUsername() {
 		return username;
 	}
@@ -132,19 +115,15 @@ public class User {
 	}
 
 	@Column(name = "password")
-	@NotEmpty(message="密码不能为空")
 	public String getPassword() {
 		return password;
 	}
-
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	@Column(name = "email")
-	@Email(message="邮箱格式不正确")
-	
 	public String getEmail() {
 		return email;
 	}
@@ -153,4 +132,18 @@ public class User {
 		this.email = email;
 	}
 
+	@Column(name="avatar")
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	@Override
+	public String toString() {
+		return "User [user_id=" + user_id + ", username=" + username
+				+ ", password=" + password + ", email=" + email + "]";
+	}
 }
