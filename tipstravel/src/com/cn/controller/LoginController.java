@@ -1,6 +1,7 @@
 package com.cn.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -34,23 +35,23 @@ public class LoginController {
 
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public @ResponseBody User login(@RequestBody  User user)
+	public @ResponseBody User login(@RequestBody User user)
 	{
-		
+
 		System.out.println("aaaaaaaaaaaaaaaaaa");
 //		return null;
 		User u = userService.login(user.getEmail());
-//		System.out.println(u);
-//		System.out.println("login check");
-		//System.out.println((u.getPassword()).equals(password));
+		System.out.println(u);
+		System.out.println("login check");
+//		System.out.println((u.getPassword()).equals(password));
 		if(u==null) 
 		{
 			user.setMessage("用户名不存在");
 			System.out.println(user);
 			return user;
 			
-			//System.out.println(user);
-			//return "/login";
+//			System.out.println(user);
+//			return "/login";
 		}
 		
 		else if(!(u.getPassword()).equals(user.getPassword()))
