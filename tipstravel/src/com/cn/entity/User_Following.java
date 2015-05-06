@@ -7,12 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
 @Entity
 @Table(name="user_following")
-//@JsonIgnoreProperties(value={"user"}) 
 public class User_Following {
 
 	private int id;
@@ -30,23 +26,28 @@ public class User_Following {
 	}
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	@JsonBackReference
 	public User getUser() {
 		return user;
 	}
-	@JsonBackReference
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
 	@ManyToOne
 	@JoinColumn(name="following_id")
-//	@JsonBackReference
 	public User getFollowinguser() {
 		return followinguser;
 	}
-//	@JsonBackReference
+	
 	public void setFollowinguser(User followinguser) {
 		this.followinguser = followinguser;
 	}
+	
+	public User_Following(User user, User followinguser) {
+		super();
+		this.user = user;
+		this.followinguser = followinguser;
+	}
+	
 	
 }

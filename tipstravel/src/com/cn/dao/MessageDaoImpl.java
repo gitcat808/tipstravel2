@@ -33,7 +33,6 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao {
 
 	@Override
 	public PaginationSupport showhome(int userid,int startindex) {
-		System.out.println("enter dao");
 		Query query=this.getSession().createQuery("from Message as m where m.user.user_id=? order by m.message_date DESC");
 		query.setParameter(0, userid);
 		query.setFirstResult(startindex).setMaxResults(10);

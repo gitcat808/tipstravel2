@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cn.entity.Message;
+import com.cn.entity.Tag;
 import com.cn.entity.PaginationSupport;
 import com.cn.service.TagService;
 
@@ -30,9 +31,9 @@ public class TagController {
 
 
 	@RequestMapping(value="/search" )
-	public PaginationSupport searchbytag(int tagid,int startindex)
+	public PaginationSupport searchbytag(String tagname,int startindex)
 	{
-		PaginationSupport ps=tagService.searchbytag(tagid, startindex);
+		PaginationSupport ps=tagService.searchbytag(tagname, startindex);
 		if(ps!=null) ps.setMessage("返回成功");
 		else ps.setMessage("返回失败");
 //		System.out.println(ps);
@@ -43,5 +44,13 @@ public class TagController {
 //			System.out.println(message);
 //		}
 		return ps;
+	}
+	
+	@RequestMapping(value="/add",method=RequestMethod.POST)
+	public void addtag(String tagname)
+	{
+		Tag tag=new Tag();
+		tag.setTag_name(tagname);
+		tagService.addTag(tag);
 	}
 }

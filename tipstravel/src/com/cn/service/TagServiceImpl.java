@@ -38,8 +38,8 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Override
-	public PaginationSupport searchbytag(int tagid, int startindex) {
-		return tagDao.searchbytag(tagid, startindex);
+	public PaginationSupport searchbytag(String tagname, int startindex) {
+		return tagDao.searchbytag(tagname, startindex);
 	}
 
 }
