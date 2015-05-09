@@ -27,6 +27,12 @@ public class LoginController {
 		this.userService = userService;
 	}
 	
+//	@RequestMapping(value="/login",method=RequestMethod.GET)
+//	public String login() {
+//		return "login";
+//	}
+
+	
 	@SuppressWarnings("unused")
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public @ResponseBody User login(@RequestBody  User user)
@@ -34,7 +40,10 @@ public class LoginController {
 		System.out.println("enter login");
 		System.out.println("user password:"+user.getPassword());
 		User u = userService.login(user.getEmail());
-		System.out.println("u password:"+u.getPassword());
+		System.out.println(u);
+		String u_password=u.getPassword();
+		System.out.println("u password:"+u_password);
+		
 		if(u==null) 
 		{
 			user.setMessage("用户名不存在");
@@ -62,3 +71,4 @@ public class LoginController {
 		return "redirect:/login";
 	}
 }
+
