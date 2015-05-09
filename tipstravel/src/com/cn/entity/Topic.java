@@ -22,10 +22,10 @@ public class Topic {
 
 	private int topic_id;
 	private String name;
-	private Set<Tag> tags;
+	private Set<Topic_Tag> topic_tag;
 	
 	public Topic() {
-		tags=new HashSet<Tag>();
+		topic_tag=new HashSet<Topic_Tag>();
 	}
 	
 	@Id
@@ -44,14 +44,22 @@ public class Topic {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@OneToMany(mappedBy = "topic",cascade=CascadeType.REMOVE)
+
+	@OneToMany(mappedBy="tt_topic",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
-	public Set<Tag> getTags() {
-		return tags;
-	}
-	public void setTags(Set<Tag> tags) {
-		this.tags = tags;
+	public Set<Topic_Tag> getTopic_Tag() {
+		return topic_tag;
 	}
 
+	public void setTopic_Tag(Set<Topic_Tag> topic_tag) {
+		this.topic_tag = topic_tag;
+	}
+
+	@Override
+	public String toString() {
+		return "Topic [topic_id=" + topic_id + ", name=" + name
+				+ ", topic_tag=" + topic_tag + "]";
+	}
+
+	
 }

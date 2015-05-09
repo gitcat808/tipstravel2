@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cn.entity.PaginationSupport;
 import com.cn.entity.User;
 
 @Repository("userDao")
@@ -57,9 +58,11 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> recommendation() {
-		List<User> list=this.getSession().createQuery("from User u where u.identify=0" ).setFirstResult(0).setMaxResults(10).list();
-		return list;
+	public PaginationSupport<User> recommendation() {
+		List<User> list=this.getSession().createQuery("from User u where u.identity=0" ).setFirstResult(0).setMaxResults(40).list();
+		PaginationSupport<User> ps=new PaginationSupport<User>();
+		ps.setData(list);
+		return ps;
 	}
 
 }

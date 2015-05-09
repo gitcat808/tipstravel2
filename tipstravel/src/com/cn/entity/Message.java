@@ -36,7 +36,7 @@ public class Message {
 	}
 	
 	
-	@OneToMany(mappedBy="message",cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="tm_message",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	public Set<Tag_Message> getTag_message() {
 		return tag_message;

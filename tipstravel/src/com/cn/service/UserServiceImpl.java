@@ -1,11 +1,12 @@
 package com.cn.service;
 
-import java.util.List;
 
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.cn.dao.UserDao;
+import com.cn.entity.PaginationSupport;
 import com.cn.entity.User;
 
 @Service("userService")
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.loadbyusername(username);
 	}
 	@Override
-	public List<User> recommendation() {
+	public PaginationSupport<User> recommendation() {
 		return userDao.recommendation();
 	}
 	@Override

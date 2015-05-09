@@ -1,8 +1,5 @@
 package com.cn.controller;
 
-
-import java.util.List;
-
 import javax.annotation.*;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cn.entity.PaginationSupport;
 import com.cn.entity.User;
 import com.cn.entity.User_Following;
 import com.cn.service.UserFollowingService;
@@ -84,8 +82,30 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="recommendation")
-	public List<User> recommendation()
+	public @ResponseBody PaginationSupport<User> recommendation()
 	{
-		return userService.recommendation();
+		PaginationSupport<User> ps=userService.recommendation();
+		if(!ps.getData().iterator().hasNext())ps.setMessage("返回失败");
+		else ps.setMessage("返回成功");
+		System.out.println(ps);
+		return ps;
+	}
+	
+	@RequestMapping(value="/update")
+	public String updateUser(User user)
+	{
+		String message="更新失败";
+		User user_update=userService.loadbyid(user.getUser_id());
+		if(user_update!=null)
+		{
+			user_update.setAvatar(user.getAvatar());
+			user_update.setIntroduction(user.getIntroduction());
+			userService.updateUser(user_update);
+			return message="更新成功";
+		}
+		else {
+			return message;
+		}
+		
 	}
 }

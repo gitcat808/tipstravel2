@@ -1,14 +1,13 @@
 package com.cn.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
-public class PaginationSupport {
+public class PaginationSupport<T> {
 	@JsonManagedReference
-	private List<Message> data=new ArrayList<Message>();
+	private List<T> data;
 	@JsonBackReference
 	private String message;
 	
@@ -26,11 +25,11 @@ public class PaginationSupport {
 		this.message = message;
 	}
 //	@JsonManagedReference
-	public List<Message> getData() {
+	public List<T> getData() {
 		return data;
 	}
 	//@JsonManagedReference
-	public void setData(List<Message> data) {
+	public void setData(List<T> data) {
 		this.data = data;
 	}
 

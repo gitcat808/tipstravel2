@@ -35,19 +35,20 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao {
 	}
 
 	@Override
-	public PaginationSupport showhome(int userid,int startindex) {
+	public PaginationSupport<Message> showhome(int userid,int startindex) {
 		Query query=this.getSession().createQuery("from Message as m where m.user.user_id=? order by m.message_date DESC");
 		query.setParameter(0, userid);
 		query.setFirstResult(startindex).setMaxResults(10);
 		@SuppressWarnings("unchecked")
 		List<Message> data=query.list();
-		PaginationSupport ps=new PaginationSupport();
+		PaginationSupport<Message> ps=new PaginationSupport<Message>();
 		ps.setData(data);
 		return ps;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public PaginationSupport showfollowing(int userid,int startindex) {
+	public PaginationSupport<Message> showfollowing(int userid,int startindex) {
 		Query query=this.getSession().createQuery("from Message as m"
 				+ " where m.user.user_id in"
 				+" (select uf.followinguser.user_id from User_Following as uf"
@@ -55,9 +56,8 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao {
 				+ " order by m.message_date DESC");
 		query.setParameter(0, userid);
 		query.setFirstResult(startindex).setMaxResults(10);
-		@SuppressWarnings("unchecked")
 		List<Message> data=query.list();
-		PaginationSupport ps=new PaginationSupport();
+		PaginationSupport<Message> ps=new PaginationSupport<Message>();
 		ps.setData(data);
 		return ps;
 	}

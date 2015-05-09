@@ -13,8 +13,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class Tag_Message {
 
 	private int id;
-	private Tag tag;
-	private Message message;
+	private Tag tm_tag;
+	private Message tm_message;
 	
 	@Id
 	@GeneratedValue
@@ -27,24 +27,24 @@ public class Tag_Message {
 	
 	@ManyToOne
 	@JoinColumn(name="tag_id")
-	public Tag getTag() {
-		return tag;
+	public Tag getTm_tag() {
+		return tm_tag;
 	}
 	
-	public void setTag(Tag tag) {
-		this.tag = tag;
+	public void setTm_tag(Tag tm_tag) {
+		this.tm_tag = tm_tag;
 	}
 	
 	@ManyToOne
 	@JoinColumn(name="message_id")
 	@JsonIgnore
-	public Message getMessage() {
-		return message;
+	public Message getTm_message() {
+		return tm_message;
 	}
 	
 	@JsonIgnore
-	public void setMessage(Message message) {
-		this.message = message;
+	public void setTm_message(Message tm_message) {
+		this.tm_message = tm_message;
 	}
 	
 }

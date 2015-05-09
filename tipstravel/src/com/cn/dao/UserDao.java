@@ -1,7 +1,7 @@
 package com.cn.dao;
 
-import java.util.List;
 
+import com.cn.entity.PaginationSupport;
 import com.cn.entity.User;
 
 public interface UserDao {
@@ -12,5 +12,5 @@ public interface UserDao {
 	public User loadbyid(int id);
 	public User loadbyemail(String email);
 	public User loadbyusername(String username);
-	public List<User> recommendation();
+	public PaginationSupport<User> recommendation();
 }

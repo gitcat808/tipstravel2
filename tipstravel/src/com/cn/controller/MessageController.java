@@ -62,30 +62,31 @@ public class MessageController {
 		messageService.addMessage(message);
 	}
 	
-	@SuppressWarnings("null")
 	@RequestMapping(value="/homepage",method=RequestMethod.POST)
-	public @ResponseBody PaginationSupport showhomepage(@RequestBody Fetchmessage_info fetchmessage_info)
+	public @ResponseBody PaginationSupport<Message> showhomepage(@RequestBody Fetchmessage_info fetchmessage_info)
 	{	
-		PaginationSupport ps=messageService.showhome(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
-		if(ps!=null)ps.setMessage("返回成功");
-		else ps.setMessage("返回失败");
+		PaginationSupport<Message> ps=messageService.showhome(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
+		if(!ps.getData().iterator().hasNext())ps.setMessage("返回失败");
+		else ps.setMessage("返回成功");
 		return ps;
 	}
 	
-	@SuppressWarnings("null")
 	@RequestMapping(value="/following",method=RequestMethod.POST)
-	public @ResponseBody PaginationSupport showfollowing(@RequestBody Fetchmessage_info fetchmessage_info)
+	public @ResponseBody PaginationSupport<Message> showfollowing(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
-		PaginationSupport ps=messageService.showfollowing(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
-		if(ps!=null)ps.setMessage("返回成功");
-		else ps.setMessage("返回失败");
+		PaginationSupport<Message> ps=messageService.showfollowing(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
+		if(!ps.getData().iterator().hasNext())ps.setMessage("返回失败");
+		else ps.setMessage("返回成功");
 		return ps;
 	}
 	
+	//返回的message是乱码
 	@RequestMapping(value="/like",method=RequestMethod.POST)
-	public String likemessage(int userid,int messageid)
+	public @ResponseBody String likemessage(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
 		String message="用户或消息不存在";
+		int userid=fetchmessage_info.getUserid();
+		int messageid=fetchmessage_info.getMessageid();
 		User userEntity=userService.loadbyid(userid);
 		//System.out.println(userEntity);
 		Message messageEntity=messageService.loadbyid(messageid);
@@ -115,5 +116,14 @@ public class MessageController {
 			return message="添加点赞";
 			}
 	}
+	
+//	@RequestMapping("/test")
+//	public void test()
+//	{
+//		PaginationSupport<Message> ps=messageService.showfollowing(1,0);
+//		if(ps!=null)ps.setMessage("返回成功");
+//		else ps.setMessage("返回失败");
+//		System.out.println(ps);
+//	}
 	
 }

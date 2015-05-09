@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.cn.dao.TagDao;
+import com.cn.entity.Message;
 import com.cn.entity.PaginationSupport;
 import com.cn.entity.Tag;
 
@@ -38,8 +39,15 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Override
-	public PaginationSupport searchbytag(String tagname, int startindex) {
-		return tagDao.searchbytag(tagname, startindex);
+	public PaginationSupport<Message> searchbytag(int tagid, int startindex) {
+		return tagDao.searchbytag(tagid, startindex);
 	}
+
+	@Override
+	public Tag loadbyname(String tagname) {
+		return tagDao.loadbyname(tagname);
+	}
+
+
 
 }

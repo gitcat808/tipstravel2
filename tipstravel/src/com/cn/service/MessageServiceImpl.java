@@ -38,12 +38,12 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public PaginationSupport showhome(int userid,int startindex) {
+	public PaginationSupport<Message> showhome(int userid,int startindex) {
 		return messageDao.showhome(userid, startindex);
 	}
 
 	@Override
-	public PaginationSupport showfollowing(int userid,int startindex) {
+	public PaginationSupport<Message> showfollowing(int userid,int startindex) {
 		return messageDao.showfollowing(userid, startindex);
 	}
 
