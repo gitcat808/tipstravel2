@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.entity.Message;
 import com.cn.entity.PaginationSupport;
@@ -22,6 +23,7 @@ public class TagDaoImpl extends HibernateDaoSupport implements TagDao {
 	}
 	
 	@Override
+	@Transactional
 	public void addTag(Tag tag) {
 		this.getHibernateTemplate().save(tag);
 	}

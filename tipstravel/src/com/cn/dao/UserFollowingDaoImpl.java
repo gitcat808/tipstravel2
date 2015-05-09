@@ -5,6 +5,7 @@ import javax.annotation.*;
 import org.hibernate.*;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.entity.User_Following;
 
@@ -17,12 +18,14 @@ public class UserFollowingDaoImpl extends HibernateDaoSupport implements UserFol
 	}
 
 	@Override
+	@Transactional
 	public void follow(User_Following user_Following) {
 		this.getHibernateTemplate().save(user_Following);
 		
 	}
 
 	@Override
+	@Transactional
 	public void unfollow(User_Following user_Following) {
 		this.getHibernateTemplate().delete(user_Following);
 	}

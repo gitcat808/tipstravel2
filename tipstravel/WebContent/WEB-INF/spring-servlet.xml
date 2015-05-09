@@ -12,15 +12,15 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
 
 	<!--启动Spring MVC的注解功能，完成请求和注解POJO的映射 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/> -->
 	<mvc:annotation-driven />
-	
-	<mvc:resources location="/image/" mapping="/image/**/"/>
+
+	<mvc:resources location="/image/" mapping="/image/**/" />
 
 	<!--使Spring支持自动检测组件，如注解的Controller -->
-	
-   <context:component-scan base-package="com.cn.controller"></context:component-scan>
+
+	<context:component-scan base-package="com.cn.controller"></context:component-scan>
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/> -->
-  
+
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -28,12 +28,13 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
- <property name="messageConverters">  
-  <list>  
-   <bean  
-    class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />  
-  </list>  
- </property>  
-</bean> 
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
 </beans>

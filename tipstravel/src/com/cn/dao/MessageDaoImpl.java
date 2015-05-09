@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.entity.Message;
 import com.cn.entity.PaginationSupport;
@@ -21,11 +22,13 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao {
 	}
 
 	@Override
+	@Transactional
 	public void addMessage(Message message) {
 		this.getHibernateTemplate().save(message);
 	}
 
 	@Override
+	@Transactional
 	public void deleteMessage(int messageid) {
 		Message message=this.loadbyid(messageid);
 		this.getHibernateTemplate().delete(message);
@@ -62,6 +65,12 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao {
 	@Override
 	public Message loadbyid(int messageid) {
 		return this.getHibernateTemplate().load(Message.class, messageid);
+	}
+
+	@Override
+	@Transactional
+	public void updateMessage(Message message) {
+		this.getHibernateTemplate().update(message);
 	}
 
 }

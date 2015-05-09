@@ -27,6 +27,21 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     
+    <!-- Spring中提供了 org.springframework.orm.hibernate3.support.OpenSessionInViewFilter; 
+		这个类来实现OpenSessionInViewer的操作 -->
+	<filter>
+		<filter-name>openSessionInViewerFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+		<init-param>  
+           <param-name>flushMode</param-name>  
+           <param-value>AUTO</param-value>  
+       </init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>openSessionInViewerFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+    
     <filter>
     	<filter-name>cors</filter-name>
     	<filter-class>com.cn.filter.SimpleCORSFilter</filter-class>
@@ -53,5 +68,8 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     
+    
+	
+
    
 </web-app>

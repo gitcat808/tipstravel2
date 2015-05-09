@@ -15,7 +15,18 @@ public class Tag {
 	private int tag_id;
 	private String tag_name;
 	private Set<Tag_Message> tag_message;
+	private Topic topic;
 	
+	@ManyToOne // ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
+	@JoinColumn(name="topic_id")
+	public Topic getTopic() {
+		return topic;
+	}
+
+	public void setTopic(Topic topic) {
+		this.topic = topic;
+	}
+
 	public Tag(){
 		tag_message=new HashSet<Tag_Message>();
 	}

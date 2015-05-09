@@ -1,14 +1,11 @@
 package com.cn.controller;
 
-import java.util.Iterator;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.cn.entity.Message;
 import com.cn.entity.Tag;
 import com.cn.entity.PaginationSupport;
 import com.cn.service.TagService;
@@ -30,6 +27,7 @@ public class TagController {
 	}
 
 
+	@SuppressWarnings("null")
 	@RequestMapping(value="/search" )
 	public PaginationSupport searchbytag(String tagname,int startindex)
 	{

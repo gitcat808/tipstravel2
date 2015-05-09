@@ -7,6 +7,7 @@ import javax.annotation.*;
 import org.hibernate.*;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.entity.User;
 
@@ -19,17 +20,20 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 	}
 
 	@Override
+	@Transactional
 	public void addUser(User user) {
 		this.getHibernateTemplate().save(user);
 	}
 
 	@Override
+	@Transactional
 	public void deleteUser(int id) {
 		User user=this.loadbyid(id);
 		this.getHibernateTemplate().delete(user);
 	}
 
 	@Override
+	@Transactional
 	public void updateUser(User user) {
 		this.getHibernateTemplate().update(user);
 	}
@@ -53,8 +57,9 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> list() {
-		return this.getSession().createQuery("from User").list();
+	public List<User> recommendation() {
+		List<User> list=this.getSession().createQuery("from User u where u.identify=0" ).setFirstResult(0).setMaxResults(10).list();
+		return list;
 	}
 
 }

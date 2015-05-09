@@ -36,8 +36,10 @@ public class Like {
 	public void setMessage(Message message) {
 		this.message = message;
 	}
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "Like [like_id=" + like_id + ", user=" + user + ", message="
+				+ message + "]";
+	}
+		
 }

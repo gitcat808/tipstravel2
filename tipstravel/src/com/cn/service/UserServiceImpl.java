@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
 		return userDao.loadbyusername(username);
 	}
 	@Override
-	public List<User> list() {
-		return userDao.list();
+	public List<User> recommendation() {
+		return userDao.recommendation();
 	}
 	@Override
 	public User login(String email) {

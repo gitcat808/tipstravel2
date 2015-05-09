@@ -1,7 +1,5 @@
 package com.cn.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -47,6 +45,11 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public PaginationSupport showfollowing(int userid,int startindex) {
 		return messageDao.showfollowing(userid, startindex);
+	}
+
+	@Override
+	public void updateMessage(Message message) {
+		messageDao.updateMessage(message);
 	}
 
 }

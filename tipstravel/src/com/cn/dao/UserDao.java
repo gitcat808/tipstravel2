@@ -12,5 +12,5 @@ public interface UserDao {
 	public User loadbyid(int id);
 	public User loadbyemail(String email);
 	public User loadbyusername(String username);
-	public List<User> list();
+	public List<User> recommendation();
 }
