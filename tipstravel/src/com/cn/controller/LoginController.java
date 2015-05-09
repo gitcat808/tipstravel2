@@ -41,9 +41,9 @@ public class LoginController {
 		System.out.println("enter login");
 		System.out.println("user password:"+user.getPassword());
 		User u = userService.login(user.getEmail());
-		System.out.println(u);
-		String u_password=u.getPassword();
-		System.out.println("u password:"+u_password);
+//		System.out.println(u);
+//		String u_password=u.getPassword();
+//		System.out.println("u password:"+u_password);
 		
 		if(u==null) 
 		{
