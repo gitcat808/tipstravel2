@@ -28,14 +28,12 @@ public class TopicController {
 		this.topicService = topicService;
 	}
 	
-	@SuppressWarnings("null")
 	@RequestMapping(value="/show")
-	public PaginationSupport<Topic> showTopic()
+	public @ResponseBody PaginationSupport<Topic> showTopic()
 	{
 		PaginationSupport<Topic> ps=topicService.showTopic();
-		if (ps!=null) ps.setMessage("返回成功");
-		else ps.setMessage("返回失败");
-		System.out.println(ps);
+		if(!ps.getData().iterator().hasNext())ps.setMessage("返回失败");
+		else ps.setMessage("返回成功");
 		return ps;
 	}
 	
@@ -47,5 +45,7 @@ public class TopicController {
 		else ps.setMessage("返回成功");
 		return ps;
 	}
+	
+
 	
 }

@@ -46,7 +46,6 @@ public class Topic {
 	}
 
 	@OneToMany(mappedBy="tt_topic",cascade=CascadeType.REMOVE)
-	@LazyCollection(LazyCollectionOption.EXTRA)
 	public Set<Topic_Tag> getTopic_Tag() {
 		return topic_tag;
 	}

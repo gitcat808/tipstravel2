@@ -34,4 +34,19 @@ public class TopicServiceImpl implements TopicService {
 		return topicDao.searchbyid(topicid, startindex);
 	}
 
+	@Override
+	public PaginationSupport<Tag> test1(int topicid) {
+		return topicDao.test1(topicid);
+	}
+
+	@Override
+	public PaginationSupport<Tag_Message> test2(int topicid) {
+		return topicDao.test2(topicid);
+	}
+
+	@Override
+	public PaginationSupport<Message> searchbyname(String name, int startindex) {
+		return topicDao.searchbyname(name, startindex);
+	}
+
 }

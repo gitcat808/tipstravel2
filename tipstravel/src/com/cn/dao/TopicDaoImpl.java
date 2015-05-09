@@ -31,11 +31,13 @@ public class TopicDaoImpl extends HibernateDaoSupport implements TopicDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public PaginationSupport<Message> searchbyid(int topicid,int startindex) {
-		Query query=this.getSession().createQuery(
-				"from Message as m where m.message_id in"
-				+" (select tm.tm_message.message_id from Tag_Message tm"
+		Query query=this.getSession().createQuery("from Message as m "
+				+ "where m.message_id in"
+				+" (select tm.tm_message.message_id from Tag_Message as tm"
 				+ " where tm.tm_tag.tag_id in"
-				+ "(select tt.tt_tag.tag_id from Topic_Tag tt where tt.tt_topic.topic_id=?)"
+				+ "(select tt.tt_tag.tag_id "
+				+ "from Topic_Tag tt "
+				+ "where tt.tt_topic.topic_id=?)"
 				+ ")"
 				+ " order by m.message_date DESC");
 		query.setParameter(0, topicid);
@@ -51,6 +53,36 @@ public class TopicDaoImpl extends HibernateDaoSupport implements TopicDao {
 	public PaginationSupport<Message> searchbyname(String name, int startindex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public PaginationSupport<Tag> test1(int topicid) {
+		Query query=this.getSession().createQuery("from Tag as t "
+				+ "where t.tag_id in "
+				+"(select tt.tt_tag.tag_id from Topic_Tag tt where tt.tt_topic.topic_id=?) "
+				);
+		query.setParameter(0, topicid);
+		query.setFirstResult(0).setMaxResults(20);
+		List<Tag> data=query.list();
+		PaginationSupport<Tag> ps=new PaginationSupport<Tag>();
+		ps.setData(data);
+		return ps;
+	}
+
+	@Override
+	public PaginationSupport<Tag_Message> test2(int topicid) {
+		Query query=this.getSession().createQuery("from Tag_Message as tm "
+				+ "where tm.tm_tag.tag_id in "
+				+"(select tt.tt_tag.tag_id "
+				+ "from Topic_Tag as tt "
+				+ "where tt.tt_topic.topic_id=?) "
+				);
+		query.setParameter(0, topicid);
+		List<Tag_Message> data=query.list();
+		PaginationSupport<Tag_Message> ps=new PaginationSupport<Tag_Message>();
+		ps.setData(data);
+		return ps;
 	}
 	
 }
