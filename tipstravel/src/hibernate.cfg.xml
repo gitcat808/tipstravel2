@@ -45,12 +45,10 @@ http://www.springframework.org/schema/tx/spring-tx.xsd"
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="show_sql">true</prop>
+				<prop key="format_sql">true</prop>
+				<prop key="connection.autocommit">true </prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.jdbc.batch_size">50</prop>
-				<prop key="hibernate.cache.use_query_cache">false</prop>
-				<prop key="hibernate.cache.use_second_level_cache">false</prop>
-				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
-			</props>
+				</props>
 		</property>
 	</bean>
 
@@ -62,5 +60,6 @@ http://www.springframework.org/schema/tx/spring-tx.xsd"
 
 	<!-- 基于注解的事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
 
 </beans>

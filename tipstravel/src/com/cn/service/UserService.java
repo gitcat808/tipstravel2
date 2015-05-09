@@ -1,7 +1,7 @@
 package com.cn.service;
 
-import java.util.List;
 
+import com.cn.entity.PaginationSupport;
 import com.cn.entity.User;
 
 public interface UserService {
@@ -11,6 +11,6 @@ public interface UserService {
 	public User loadbyid(int id);
 	public User loadbyemail(String email);
 	public User loadbyusername(String username);
-	public List<User> list();
+	public PaginationSupport<User> recommendation();
 	public User login(String email);
 }

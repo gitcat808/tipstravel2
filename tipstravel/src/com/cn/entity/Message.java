@@ -1,6 +1,5 @@
 package com.cn.entity;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -30,7 +27,7 @@ public class Message {
 	private Set<Tag_Message> tag_message;
 	private User user;
 	private Set<Like> messagealllikes;
-	private String like_count;
+	private int like_count;
 	
 	public Message()
 	{
@@ -39,7 +36,7 @@ public class Message {
 	}
 	
 	
-	@OneToMany(mappedBy="message",cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="tm_message",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	public Set<Tag_Message> getTag_message() {
 		return tag_message;
@@ -49,8 +46,7 @@ public class Message {
 		this.tag_message = tag_message;
 	}
 
-	@OneToMany(mappedBy="message",cascade=CascadeType.REMOVE)
-	@LazyCollection(LazyCollectionOption.EXTRA)
+	@OneToMany(mappedBy="message")
 	@JsonIgnore
 	public Set<Like> getMessagealllikes() {
 		return messagealllikes;
@@ -105,13 +101,13 @@ public class Message {
 		this.message_date = message_date;
 	}
 
-	@Column(name="like_count")
-	public String getLike_count() {
+	@Column(name="like_count",columnDefinition="int(20) default 0")
+	public int getLike_count() {
 		return like_count;
 	}
 
 
-	public void setLike_count(String like_count) {
+	public void setLike_count(int like_count) {
 		this.like_count = like_count;
 	}
 
@@ -121,8 +117,9 @@ public class Message {
 		return "Message [message_id=" + message_id + ", context=" + context
 				+ ", image=" + image + ", message_date=" + message_date
 				+ ", tag_message=" + tag_message + ", user=" + user
-				+ ", messagealllikes=" + messagealllikes + ", like_count="
-				+ like_count + "]";
+				+ ", like_count=" + like_count + "]";
 	}
+
+
 
 }

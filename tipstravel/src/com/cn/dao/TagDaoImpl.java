@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cn.entity.Message;
 import com.cn.entity.PaginationSupport;
@@ -22,6 +23,7 @@ public class TagDaoImpl extends HibernateDaoSupport implements TagDao {
 	}
 	
 	@Override
+	@Transactional
 	public void addTag(Tag tag) {
 		this.getHibernateTemplate().save(tag);
 	}
@@ -37,18 +39,18 @@ public class TagDaoImpl extends HibernateDaoSupport implements TagDao {
 		return this.getHibernateTemplate().load(Tag.class, tagid);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public PaginationSupport searchbytag(String tagname, int startindex) {
+	public PaginationSupport<Message> searchbytag(int tagid, int startindex) {
 		Query query=this.getSession().createQuery("from Message as m"
 				+ " where m.message_id in"
-				+" (select tm.message_id from Tag_Message as tm"
-				+ " where tm.tag_name=?)"
+				+" (select tm.tm_message.message_id from Tag_Message as tm"
+				+ " where tm.tm_tag.tag_id=?)"
 				+ " order by m.message_date DESC");
-		query.setParameter(0, tagname);
+		query.setParameter(0, tagid);
 		query.setFirstResult(startindex).setMaxResults(20);
-		@SuppressWarnings("unchecked")
 		List<Message> data=query.list();
-		PaginationSupport ps=new PaginationSupport();
+		PaginationSupport<Message> ps=new PaginationSupport<Message>();
 		ps.setData(data);
 		return ps;
 	}

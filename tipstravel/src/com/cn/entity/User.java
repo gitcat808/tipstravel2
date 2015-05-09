@@ -28,8 +28,30 @@ public class User {
 	private Set<Message> alluserMessages;
 	private String message;
 	private String avatar;
+	private String introduction;
+	private String identity;//0为普通用户1为VIP
 	private Set<User_Following> allfollowingusermaster;//当前登陆用户关注的人
 	private Set<User_Following> allfollowinguseranother;//任意一个其他用户关注的人
+
+	@Column(name="identity",columnDefinition="int(11) default 0")
+	@JsonIgnore
+	public String getIdentity() {
+		return identity;
+	}
+	
+	public void setIdentity(String identity) {
+		this.identity = identity;
+	}
+
+	@Column(name="introduction")
+	@JsonIgnore
+	public String getIntroduction() {
+		return introduction;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
 
 	public String getMessage() {
 		return message;
@@ -39,7 +61,7 @@ public class User {
 		this.message = message;
 	}
 
-	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "user")
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@JsonIgnore
 	public Set<Like> getUseralllikes() {
@@ -51,7 +73,7 @@ public class User {
 		this.useralllikes = useralllikes;
 	}
 
-	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "user",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@JsonIgnore
 	public Set<Message> getAlluserMessages() {
@@ -70,7 +92,7 @@ public class User {
 		alluserMessages = new HashSet<Message>();
 	}
 
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@JsonIgnore
 	public Set<User_Following> getAllfollowingusermaster() {
@@ -81,7 +103,7 @@ public class User {
 		this.allfollowingusermaster = allfollowingusermaster;
 	}
 	
-	@OneToMany(mappedBy="followinguser",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="followinguser",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@JsonIgnore
 	public Set<User_Following> getAllfollowinguseranother() {
@@ -144,6 +166,9 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [user_id=" + user_id + ", username=" + username
-				+ ", password=" + password + ", email=" + email + "]";
+				+ ", password=" + password + ", email=" + email + ", message="
+				+ message + ", avatar=" + avatar + ", introduction="
+				+ introduction + ", identity=" + identity + "]";
 	}
+
 }

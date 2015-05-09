@@ -1,13 +1,14 @@
 package com.cn.controller;
 
-import java.util.Iterator;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cn.entity.Fetchmessage_info;
 import com.cn.entity.Message;
 import com.cn.entity.Tag;
 import com.cn.entity.PaginationSupport;
@@ -29,20 +30,21 @@ public class TagController {
 		this.tagService = tagService;
 	}
 
-
+	//英文的可以搜，中文的搜不了，应该是编码问题
 	@RequestMapping(value="/search" )
-	public PaginationSupport searchbytag(String tagname,int startindex)
+	public @ResponseBody PaginationSupport<Message> searchbytag(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
-		PaginationSupport ps=tagService.searchbytag(tagname, startindex);
-		if(ps!=null) ps.setMessage("返回成功");
-		else ps.setMessage("返回失败");
-//		System.out.println(ps);
-//		Iterator iterator=ps.getData().iterator();
-//		while(iterator.hasNext())
-//		{
-//			Message message=(Message)iterator.next();
-//			System.out.println(message);
-//		}
+		PaginationSupport<Message> ps=new PaginationSupport<Message>();
+		Tag tag=tagService.loadbyname(fetchmessage_info.getTagname());
+		System.out.println(tag);
+		if(tag==null) 
+		{
+			ps.setMessage("返回失败");
+			return ps;
+		}
+		ps=tagService.searchbytag(tag.getTag_id(),fetchmessage_info.getStartindex());
+		if(!ps.getData().iterator().hasNext())ps.setMessage("返回失败");
+		else ps.setMessage("返回成功");
 		return ps;
 	}
 	
