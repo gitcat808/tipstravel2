@@ -36,7 +36,6 @@ public class TagController {
 	{
 		PaginationSupport<Message> ps=new PaginationSupport<Message>();
 		Tag tag=tagService.loadbyname(fetchmessage_info.getTagname());
-		System.out.println(tag);
 		if(tag==null) 
 		{
 			ps.setMessage("∑µªÿ ß∞‹");

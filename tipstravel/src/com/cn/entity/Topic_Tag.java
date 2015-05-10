@@ -41,10 +41,6 @@ public class Topic_Tag {
 	public void setTt_tag(Tag tt_tag) {
 		this.tt_tag = tt_tag;
 	}
-	@Override
-	public String toString() {
-		return "Topic_Tag [id=" + id + ", tt_topic=" + tt_topic + ", tt_tag="
-				+ tt_tag + "]";
-	}
+	
 	
 }
