@@ -70,6 +70,7 @@ public class TopicDaoImpl extends HibernateDaoSupport implements TopicDao {
 		return ps;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public PaginationSupport<Tag_Message> test2(int topicid) {
 		Query query=this.getSession().createQuery("from Tag_Message as tm "
