@@ -52,7 +52,7 @@ public class MessageController {
 		this.messageService = messageService;
 	}
 	
-	//¹·£¡µ×²ãµÄ·½·¨¶¼Ğ´ºÃÁË£¬¸ÄÒ»ÏÂ¾ÍÄÜÓÃÁË
+	//ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½Ğ´ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Ò»ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public void addMessage()
 	{
@@ -66,8 +66,8 @@ public class MessageController {
 	public @ResponseBody PaginationSupport<Message> showhomepage(@RequestBody Fetchmessage_info fetchmessage_info)
 	{	
 		PaginationSupport<Message> ps=messageService.showhome(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
-		if(!ps.getData().iterator().hasNext())ps.setMessage("·µ»ØÊ§°Ü");
-		else ps.setMessage("·µ»Ø³É¹¦");
+		if(!ps.getData().iterator().hasNext())ps.setMessage("è¿”å›å¤±è´¥");
+		else ps.setMessage("è¿”å›æˆåŠŸ");
 		return ps;
 	}
 	
@@ -75,16 +75,16 @@ public class MessageController {
 	public @ResponseBody PaginationSupport<Message> showfollowing(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
 		PaginationSupport<Message> ps=messageService.showfollowing(fetchmessage_info.getUserid(),fetchmessage_info.getStartindex());
-		if(!ps.getData().iterator().hasNext())ps.setMessage("·µ»ØÊ§°Ü");
-		else ps.setMessage("·µ»Ø³É¹¦");
+		if(!ps.getData().iterator().hasNext())ps.setMessage("è¿”å›å¤±è´¥");
+		else ps.setMessage("è¿”å›æˆåŠŸ");
 		return ps;
 	}
 	
-	//·µ»ØµÄmessageÊÇÂÒÂë
-	@RequestMapping(value="/like",method=RequestMethod.POST)
+	//ï¿½ï¿½ï¿½Øµï¿½messageï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	@RequestMapping(value="/like",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
 	public @ResponseBody String likemessage(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
-		String message="ÓÃ»§»òÏûÏ¢²»´æÔÚ";
+		String message="ç”¨æˆ·æˆ–æ¶ˆæ¯ä¸å­˜åœ¨";
 		int userid=fetchmessage_info.getUserid();
 		int messageid=fetchmessage_info.getMessageid();
 		User userEntity=userService.loadbyid(userid);
@@ -104,7 +104,7 @@ public class MessageController {
 				messageEntity.setLike_count(--like_count);
 				likeService.delete(likeid);
 				messageService.updateMessage(messageEntity);
-				return message="È¡ÏûµãÔŞ";
+				return message="å–æ¶ˆç‚¹èµ";
 			}
 		else {
 			Like like=new Like();
@@ -113,7 +113,7 @@ public class MessageController {
 			likeService.add(like);
 			messageEntity.setLike_count(++like_count);
 			messageService.updateMessage(messageEntity);
-			return message="Ìí¼ÓµãÔŞ";
+			return message="ç‚¹èµ";
 			}
 	}
 	
@@ -121,8 +121,8 @@ public class MessageController {
 //	public void test()
 //	{
 //		PaginationSupport<Message> ps=messageService.showfollowing(1,0);
-//		if(ps!=null)ps.setMessage("·µ»Ø³É¹¦");
-//		else ps.setMessage("·µ»ØÊ§°Ü");
+//		if(ps!=null)ps.setMessage("ï¿½ï¿½ï¿½Ø³É¹ï¿½");
+//		else ps.setMessage("ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½");
 //		System.out.println(ps);
 //	}
 	

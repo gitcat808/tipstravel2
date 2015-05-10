@@ -30,7 +30,7 @@ public class TagController {
 		this.tagService = tagService;
 	}
 
-	//Ó¢ÎÄµÄ¿ÉÒÔËÑ£¬ÖĞÎÄµÄËÑ²»ÁË£¬Ó¦¸ÃÊÇ±àÂëÎÊÌâ
+	//Ó¢ï¿½ÄµÄ¿ï¿½ï¿½ï¿½ï¿½Ñ£ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½Ñ²ï¿½ï¿½Ë£ï¿½Ó¦ï¿½ï¿½ï¿½Ç±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/search" )
 	public @ResponseBody PaginationSupport<Message> searchbytag(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
@@ -38,12 +38,12 @@ public class TagController {
 		Tag tag=tagService.loadbyname(fetchmessage_info.getTagname());
 		if(tag==null) 
 		{
-			ps.setMessage("·µ»ØÊ§°Ü");
+			ps.setMessage("è¿”å›å¤±è´¥");
 			return ps;
 		}
 		ps=tagService.searchbytag(tag.getTag_id(),fetchmessage_info.getStartindex());
-		if(!ps.getData().iterator().hasNext())ps.setMessage("·µ»ØÊ§°Ü");
-		else ps.setMessage("·µ»Ø³É¹¦");
+		if(!ps.getData().iterator().hasNext())ps.setMessage("è¿”å›å¤±è´¥");
+		else ps.setMessage("è¿”å›æˆåŠŸ");
 		return ps;
 	}
 	

@@ -32,8 +32,8 @@ public class TopicController {
 	public @ResponseBody PaginationSupport<Topic> showTopic()
 	{
 		PaginationSupport<Topic> ps=topicService.showTopic();
-		if(!ps.getData().iterator().hasNext())ps.setMessage("·µ»ØÊ§°Ü");
-		else ps.setMessage("·µ»Ø³É¹¦");
+		if(!ps.getData().iterator().hasNext())ps.setMessage("è¿”å›å¤±è´¥");
+		else ps.setMessage("è¿”å›æˆåŠŸ");
 		return ps;
 	}
 	
@@ -41,8 +41,8 @@ public class TopicController {
 	public @ResponseBody PaginationSupport<Message> searchbyid(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
 		PaginationSupport<Message> ps=topicService.searchbyid(fetchmessage_info.getTopicid(), fetchmessage_info.getStartindex());
-		if(!ps.getData().iterator().hasNext())ps.setMessage("·µ»ØÊ§°Ü");
-		else ps.setMessage("·µ»Ø³É¹¦");
+		if(!ps.getData().iterator().hasNext())ps.setMessage("è¿”å›å¤±è´¥");
+		else ps.setMessage("è¿”å›æˆåŠŸ");
 		return ps;
 	}
 	

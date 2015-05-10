@@ -49,17 +49,17 @@ public class UserController {
 		User user_load_by_email=userService.loadbyemail(user.getEmail());
 		if(user_load_by_email!=null)
 		{
-			user_load_by_email.setMessage("ÓÊÏäÒÑ×¢²á");
+			user_load_by_email.setMessage("é‚®ç®±å·²æ³¨å†Œ");
 			return user_load_by_email;
 		}
 		User user_load_by_username=userService.loadbyusername(user.getUsername());
 		if(user_load_by_username!=null)
 		{
-			user_load_by_username.setMessage("ÓÃ»§ÃûÒÑ×¢²á");
+			user_load_by_username.setMessage("ç”¨æˆ·åå·²æ³¨å†Œ");
 			return user_load_by_username;
 		}
 		userService.addUser(user);
-		user.setMessage("×¢²á³É¹¦");
+		user.setMessage("æ³¨å†ŒæˆåŠŸ");
 		return user;
 	}
 	
@@ -85,8 +85,8 @@ public class UserController {
 	public @ResponseBody PaginationSupport<User> recommendation()
 	{
 		PaginationSupport<User> ps=userService.recommendation();
-		if(!ps.getData().iterator().hasNext())ps.setMessage("·µ»ØÊ§°Ü");
-		else ps.setMessage("·µ»Ø³É¹¦");
+		if(!ps.getData().iterator().hasNext())ps.setMessage("è¿”å›å¤±è´¥");
+		else ps.setMessage("è¿”å›æˆåŠŸ");
 		System.out.println(ps);
 		return ps;
 	}
@@ -94,14 +94,14 @@ public class UserController {
 	@RequestMapping(value="/update")
 	public String updateUser(User user)
 	{
-		String message="¸üĞÂÊ§°Ü";
+		String message="æ›´æ–°å¤±è´¥";
 		User user_update=userService.loadbyid(user.getUser_id());
 		if(user_update!=null)
 		{
 			user_update.setAvatar(user.getAvatar());
 			user_update.setIntroduction(user.getIntroduction());
 			userService.updateUser(user_update);
-			return message="¸üĞÂ³É¹¦";
+			return message="æ›´æ–°æˆåŠŸ";
 		}
 		else {
 			return message;
