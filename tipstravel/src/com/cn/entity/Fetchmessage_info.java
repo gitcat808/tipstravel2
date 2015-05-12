@@ -6,9 +6,16 @@ public class Fetchmessage_info {
  String tagname;
  int messageid;
  int topicid;
+ int followingid;
  
  
  
+public int getFollowingid() {
+	return followingid;
+}
+public void setFollowingid(int followingid) {
+	this.followingid = followingid;
+}
 public int getTopicid() {
 	return topicid;
 }

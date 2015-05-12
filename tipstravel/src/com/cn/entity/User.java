@@ -30,8 +30,17 @@ public class User {
 	private String avatar;
 	private String introduction;
 	private String identity;//0为普通用户1为VIP
+	private String isfollowed;
 	private Set<User_Following> allfollowingusermaster;//当前登陆用户关注的人
 	private Set<User_Following> allfollowinguseranother;//任意一个其他用户关注的人
+	
+	public String getIsfollowed() {
+		return isfollowed;
+	}
+
+	public void setIsfollowed(String isfollowed) {
+		this.isfollowed = isfollowed;
+	}
 
 	@Column(name="identity",columnDefinition="int(11) default 0")
 	@JsonIgnore

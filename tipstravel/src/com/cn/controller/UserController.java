@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cn.entity.Fetchmessage_info;
 import com.cn.entity.PaginationSupport;
 import com.cn.entity.User;
 import com.cn.entity.User_Following;
@@ -63,23 +64,31 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping(value="/follow")
-	public void followUser(int userid,int followingid)
+	@RequestMapping(value="/follow",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	public @ResponseBody String  followUser(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
+		String message="用户不存在";
+		int userid=fetchmessage_info.getUserid();
+		int followingid=fetchmessage_info.getFollowingid();
 		User user=userService.loadbyid(userid);
 		User followingUser=userService.loadbyid(followingid);
+		if(user==null||followingUser==null)return message;
 		User_Following user_Following=new User_Following(user,followingUser);
-		userFollowingService.follow(user_Following);
+		User_Following followexist=userFollowingService.followexist(userid, followingid);
+		if(followexist==null)
+		{
+			userFollowingService.follow(user_Following);
+			message="关注成功";
+			return  message;
+		}
+		else 
+		{
+			userFollowingService.unfollow(followexist);
+			message="取消关注";
+			return message;
+		}
 	}
 	
-	@RequestMapping(value="/unfollow")
-	public void unfollowUser(int userid,int followingid)
-	{
-		User user=userService.loadbyid(userid);
-		User followingUser=userService.loadbyid(followingid);
-		User_Following user_Following=new User_Following(user,followingUser);
-		userFollowingService.unfollow(user_Following);
-	}
 	
 	@RequestMapping(value="recommendation")
 	public @ResponseBody PaginationSupport<User> recommendation()
@@ -91,8 +100,8 @@ public class UserController {
 		return ps;
 	}
 	
-	@RequestMapping(value="/update")
-	public String updateUser(User user)
+	@RequestMapping(value="/update",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	public @ResponseBody String updateUser(@RequestBody User user)
 	{
 		String message="更新失败";
 		User user_update=userService.loadbyid(user.getUser_id());

@@ -17,8 +17,10 @@ import com.cn.entity.Like;
 import com.cn.entity.Message;
 import com.cn.entity.Tag;
 import com.cn.entity.PaginationSupport;
+import com.cn.entity.User_Following;
 import com.cn.service.LikeService;
 import com.cn.service.TagService;
+import com.cn.service.UserFollowingService;
 
 @Controller
 @RequestMapping("/tag")
@@ -26,7 +28,17 @@ public class TagController {
 
 	private TagService tagService;
 	private LikeService likeService;
+	private UserFollowingService userFollowingService;
 	
+	public UserFollowingService getUserFollowingService() {
+		return userFollowingService;
+	}
+
+	@Resource
+	public void setUserFollowingService(UserFollowingService userFollowingService) {
+		this.userFollowingService = userFollowingService;
+	}
+
 	public LikeService getLikeService() {
 		return likeService;
 	}
@@ -45,6 +57,7 @@ public class TagController {
 		this.tagService = tagService;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/search" )
 	public @ResponseBody PaginationSupport<Message> searchbytag(@RequestBody Fetchmessage_info fetchmessage_info)
 	{
@@ -66,9 +79,20 @@ public class TagController {
 		{
 			Message message=(Message)iterator.next();
 			int messageid=message.getMessage_id();
+			int followingid=message.getUser().getUser_id();
 			Like like_exist=likeService.likeexist(userid, messageid);
 			if(like_exist!=null) message.setIsliked("true");
 			else message.setIsliked("false");
+			if(userid==followingid)
+			{
+				message.getUser().setIsfollowed("关注对象为自身");
+			}
+			else
+			{
+				User_Following following_exist=userFollowingService.followexist(userid, followingid);
+				if(following_exist!=null)message.getUser().setIsfollowed("true");
+				else message.getUser().setIsfollowed("false");
+			}
 			data.add(message);
 		}
 		ps.setData(data);

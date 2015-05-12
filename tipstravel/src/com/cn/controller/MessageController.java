@@ -52,14 +52,16 @@ public class MessageController {
 		this.messageService = messageService;
 	}
 	
-	
-	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public void addMessage()
+	//还没写完，这里收json的message需要重新写一个实体
+	@RequestMapping(value="/add",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+	public @ResponseBody String addMessage()
 	{
+		String info="上传成功";
 		Message message=new Message();
 		message.setContext("test from add");
 		message.setUser(userService.loadbyid(1));
 		messageService.addMessage(message);
+		return info;
 	}
 	
 	@RequestMapping(value="/homepage",method=RequestMethod.POST)
@@ -87,16 +89,10 @@ public class MessageController {
 		int userid=fetchmessage_info.getUserid();
 		int messageid=fetchmessage_info.getMessageid();
 		User userEntity=userService.loadbyid(userid);
-		//System.out.println(userEntity);
 		Message messageEntity=messageService.loadbyid(messageid);
 		int like_count=messageEntity.getLike_count();
-		//System.out.println(messageEntity);
-		if(userEntity==null||messageEntity==null)
-			{
-				return message;
-			}
+		if(userEntity==null||messageEntity==null) return message;
 		Like like_exist=likeService.likeexist(userid, messageid);
-		//System.out.println("like_exist:"+like_exist);
 		if(like_exist!=null)
 			{
 				int likeid=like_exist.getLike_id();
@@ -112,17 +108,8 @@ public class MessageController {
 			likeService.add(like);
 			messageEntity.setLike_count(++like_count);
 			messageService.updateMessage(messageEntity);
-			return message="点赞";
+			return message="点赞成功";
 			}
 	}
-	
-//	@RequestMapping("/test")
-//	public void test()
-//	{
-//		PaginationSupport<Message> ps=messageService.showfollowing(1,0);
-//		if(ps!=null)ps.setMessage("���سɹ�");
-//		else ps.setMessage("����ʧ��");
-//		System.out.println(ps);
-//	}
-	
+
 }

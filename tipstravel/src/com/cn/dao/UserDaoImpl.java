@@ -9,8 +9,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cn.entity.PaginationSupport;
-import com.cn.entity.User;
+import com.cn.entity.*;
 
 @Repository("userDao")
 public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
@@ -64,5 +63,6 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 		ps.setData(list);
 		return ps;
 	}
+
 
 }

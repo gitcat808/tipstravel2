@@ -29,5 +29,9 @@ public class UserFollowingServiceImpl implements UserFollowingService {
 	public void unfollow(User_Following user_Following) {
 		userFollowingDao.unfollow(user_Following);
 	}
+	@Override
+	public User_Following followexist(int userid, int followingid) {
+		return userFollowingDao.followexist(userid, followingid);
+	}
 
 }

@@ -28,7 +28,7 @@ public class Message {
 	private User user;
 	private Set<Like> messagealllikes;
 	private int like_count;
-	private String isliked;
+	private String isliked=null;
 	
 	public String getIsliked() {
 		return isliked;

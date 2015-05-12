@@ -49,5 +49,9 @@ public class User_Following {
 		this.followinguser = followinguser;
 	}
 	
+	public User_Following()
+	{
+		
+	}
 	
 }

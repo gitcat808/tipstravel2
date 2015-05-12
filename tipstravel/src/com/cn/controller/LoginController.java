@@ -27,21 +27,12 @@ public class LoginController {
 		this.userService = userService;
 	}
 	
-//	@RequestMapping(value="/login",method=RequestMethod.GET)
-//	public String login() {
-//		return "login";
-//	}
-
-	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public @ResponseBody User login(@RequestBody  User user)
 	{
 		System.out.println("enter login");
 		System.out.println("user password:"+user.getPassword());
 		User u = userService.login(user.getEmail());
-//		System.out.println(u);
-//		String u_password=u.getPassword();
-//		System.out.println("u password:"+u_password);
 		
 		if(u==null) 
 		{
