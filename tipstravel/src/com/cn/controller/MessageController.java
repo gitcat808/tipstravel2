@@ -52,7 +52,7 @@ public class MessageController {
 		this.messageService = messageService;
 	}
 	
-	//�����ײ�ķ�����д���ˣ���һ�¾�������
+	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public void addMessage()
 	{
@@ -80,7 +80,6 @@ public class MessageController {
 		return ps;
 	}
 	
-	//���ص�message������
 	@RequestMapping(value="/like",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
 	public @ResponseBody String likemessage(@RequestBody Fetchmessage_info fetchmessage_info)
 	{

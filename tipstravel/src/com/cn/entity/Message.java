@@ -28,14 +28,22 @@ public class Message {
 	private User user;
 	private Set<Like> messagealllikes;
 	private int like_count;
+	private String isliked;
 	
+	public String getIsliked() {
+		return isliked;
+	}
+
+	public void setIsliked(String isliked) {
+		this.isliked = isliked;
+	}
+
 	public Message()
 	{
 		messagealllikes=new HashSet<Like>();
 		tag_message=new HashSet<Tag_Message>();
 	}
-	
-	
+
 	@OneToMany(mappedBy="tm_message",cascade=CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	public Set<Tag_Message> getTag_message() {

@@ -33,7 +33,6 @@ public class LoginController {
 //	}
 
 	
-	@SuppressWarnings("unused")
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public @ResponseBody User login(@RequestBody  User user)
 	{
@@ -46,19 +45,19 @@ public class LoginController {
 		
 		if(u==null) 
 		{
-			user.setMessage("ÓÃ»§Ãû²»´æÔÚ");
+			user.setMessage("ç”¨æˆ·åä¸å­˜åœ¨");
 			System.out.println(user);
 			return user;
 		}
 				
 		else if(!(u.getPassword()).equals(user.getPassword()))
 		{
-			user.setMessage("ÃÜÂë²»ÕıÈ·");
+			user.setMessage("å¯†ç ä¸æ­£ç¡®");
 			return user;
 		}
 		else
 		{
-			u.setMessage("µÇÂ½³É¹¦");		
+			u.setMessage("ç™»é™†æˆåŠŸ");		
 		}
 		return u;
 		
