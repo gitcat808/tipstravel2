@@ -163,7 +163,7 @@ public class User {
 		this.email = email;
 	}
 
-	@Column(name="avatar")
+	@Column(name="avatar",columnDefinition="vchar(255) default /image/avatar/user11.jpg")
 	public String getAvatar() {
 		return avatar;
 	}
