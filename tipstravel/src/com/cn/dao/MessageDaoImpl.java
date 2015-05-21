@@ -73,4 +73,10 @@ public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao {
 		this.getHibernateTemplate().update(message);
 	}
 
+	@Override
+	public Message loadbytime(String message_date) {
+		return (Message) this.getSession().createQuery("from Message where message_date=?")
+				.setParameter(0, message_date).uniqueResult();
+	}
+
 }

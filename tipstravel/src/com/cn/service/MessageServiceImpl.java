@@ -52,4 +52,9 @@ public class MessageServiceImpl implements MessageService {
 		messageDao.updateMessage(message);
 	}
 
+	@Override
+	public Message loadbydate(String message_date) {
+		return messageDao.loadbytime(message_date);
+	}
+
 }

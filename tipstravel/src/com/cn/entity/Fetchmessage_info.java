@@ -1,5 +1,8 @@
 package com.cn.entity;
 
+import java.util.List;
+
+
 public class Fetchmessage_info {
  int userid;
  int startindex;
@@ -7,9 +10,29 @@ public class Fetchmessage_info {
  int messageid;
  int topicid;
  int followingid;
+ private String context;
+ private List<Tag> tag;
+ private List<User> allFollowUsers;
  
- 
- 
+public List<User> getAllFollowUsers() {
+	return allFollowUsers;
+}
+public void setAllFollowUsers(List<User> allFollowUsers) {
+	this.allFollowUsers = allFollowUsers;
+}
+public List<Tag> getTag() {
+	return tag;
+}
+public void setTag(List<Tag> tag) {
+	this.tag = tag;
+}
+public String getContext() {
+	return context;
+}
+public void setContext(String context) {
+	this.context = context;
+}
+
 public int getFollowingid() {
 	return followingid;
 }

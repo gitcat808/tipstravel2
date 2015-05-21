@@ -46,5 +46,14 @@ public class Tag_Message {
 	public void setTm_message(Message tm_message) {
 		this.tm_message = tm_message;
 	}
+	public Tag_Message(Tag tm_tag, Message tm_message) {
+		super();
+		this.tm_tag = tm_tag;
+		this.tm_message = tm_message;
+	}
+	
+	public Tag_Message()
+	{}
+	
 	
 }

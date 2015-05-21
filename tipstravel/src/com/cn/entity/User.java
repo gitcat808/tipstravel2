@@ -2,7 +2,6 @@ package com.cn.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,9 +30,29 @@ public class User {
 	private String introduction;
 	private String identity;//0为普通用户1为VIP
 	private String isfollowed;
+	private String gender;
+	private String city;
 	private Set<User_Following> allfollowingusermaster;//当前登陆用户关注的人
 	private Set<User_Following> allfollowinguseranother;//任意一个其他用户关注的人
 	
+	@Column(name="gender")
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	@Column(name="city")
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	public String getIsfollowed() {
 		return isfollowed;
 	}
@@ -53,7 +72,6 @@ public class User {
 	}
 
 	@Column(name="introduction")
-	@JsonIgnore
 	public String getIntroduction() {
 		return introduction;
 	}

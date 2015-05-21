@@ -58,7 +58,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public PaginationSupport<User> recommendation() {
-		List<User> list=this.getSession().createQuery("from User u where u.identity=0" ).setFirstResult(0).setMaxResults(40).list();
+		List<User> list=this.getSession().createQuery("from User u where u.identity=1" ).setFirstResult(0).setMaxResults(40).list();
 		PaginationSupport<User> ps=new PaginationSupport<User>();
 		ps.setData(list);
 		return ps;

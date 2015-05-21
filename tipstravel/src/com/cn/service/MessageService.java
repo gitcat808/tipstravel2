@@ -11,5 +11,6 @@ public interface MessageService {
 	public Message loadbyid(int messageid);
 	public PaginationSupport<Message> showhome(int userid,int startindex);
 	public PaginationSupport<Message> showfollowing(int userid,int startindex);
+	public Message loadbydate(String message_date);
 
 }
