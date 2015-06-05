@@ -71,8 +71,8 @@ public class TopicController {
 	{
 		int userid=fetchmessage_info.getUserid();
 		PaginationSupport<Message> ps=topicService.searchbyid(fetchmessage_info.getTopicid(), fetchmessage_info.getStartindex());
-		if(!ps.getData().iterator().hasNext())ps.setMessage("返回失败");
-		else ps.setMessage("返回成功");
+		if(!ps.getData().iterator().hasNext())ps.setMessage("fail");
+		else ps.setMessage("success");
 		List<Message> data=new ArrayList<Message>();
 		Iterator iterator=ps.getData().iterator();
 		int size=ps.getData().size();
@@ -86,7 +86,7 @@ public class TopicController {
 			else message.setIsliked("false");
 			if(userid==followingid)
 			{
-				message.getUser().setIsfollowed("关注对象为自身");
+				message.getUser().setIsfollowed("itself");
 			}
 			else
 			{

@@ -77,7 +77,7 @@ public class UserController {
 	@RequestMapping(value = "/follow", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public @ResponseBody
 	String followUser(@RequestBody Fetchmessage_info fetchmessage_info) {
-		String message = "用户不存在";
+		String message = "notexist";
 		int userid = fetchmessage_info.getUserid();
 		int followingid = fetchmessage_info.getFollowingid();
 		User user = userService.loadbyid(userid);
@@ -89,11 +89,11 @@ public class UserController {
 				followingid);
 		if (followexist == null) {
 			userFollowingService.follow(user_Following);
-			message = "关注成功";
+			message = "followsuccess";
 			return message;
 		} else {
 			userFollowingService.unfollow(followexist);
-			message = "取消关注";
+			message = "unfollowsuccess";
 			return message;
 		}
 	}
@@ -105,10 +105,9 @@ public class UserController {
 		System.out.println("enter recommendation");
 		PaginationSupport<User> ps = userService.recommendation();
 		if (!ps.getData().iterator().hasNext())
-			ps.setMessage("返回失败");
+			ps.setMessage("fail");
 		else
-			ps.setMessage("返回成功");
-		System.out.println(ps);
+			ps.setMessage("success");
 		return ps;
 	}
 
@@ -173,6 +172,7 @@ public class UserController {
 	public @ResponseBody
 	String nachrecommendation(@RequestBody Fetchmessage_info fetchmessage_info) {
 		String info = "fail";
+		System.out.println("enter add recommendation");
 		int login_userid = fetchmessage_info.getUserid();
 		User login_user = userService.loadbyid(login_userid);
 		List<User> allfollowuser = fetchmessage_info.getAllFollowUsers();

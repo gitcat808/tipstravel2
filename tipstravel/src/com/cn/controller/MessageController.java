@@ -166,7 +166,7 @@ public class MessageController {
 	@RequestMapping(value = "/like", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public @ResponseBody
 	String likemessage(@RequestBody Fetchmessage_info fetchmessage_info) {
-		String message = "用户或消息不存在";
+		String message = "notexist";
 		int userid = fetchmessage_info.getUserid();
 		int messageid = fetchmessage_info.getMessageid();
 		User userEntity = userService.loadbyid(userid);
@@ -180,7 +180,7 @@ public class MessageController {
 			messageEntity.setLike_count(--like_count);
 			likeService.delete(likeid);
 			messageService.updateMessage(messageEntity);
-			return message = "取消点赞";
+			return message = "dislikesuccess";
 		} else {
 			Like like = new Like();
 			like.setUser(userEntity);
@@ -188,7 +188,7 @@ public class MessageController {
 			likeService.add(like);
 			messageEntity.setLike_count(++like_count);
 			messageService.updateMessage(messageEntity);
-			return message = "点赞成功";
+			return message = "likesuccess";
 		}
 	}
 
