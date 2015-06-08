@@ -96,6 +96,7 @@ public class TagController {
 			data.add(message);
 		}
 		ps.setData(data);
+		System.out.println(ps);
 		return ps;
 	}
 	

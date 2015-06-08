@@ -3,19 +3,19 @@ package com.cn.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cn.entity.Fetchmessage_info;
@@ -25,10 +25,12 @@ import com.cn.entity.PaginationSupport;
 import com.cn.entity.Tag;
 import com.cn.entity.Tag_Message;
 import com.cn.entity.User;
+import com.cn.entity.User_Following;
 import com.cn.service.LikeService;
 import com.cn.service.MessageService;
 import com.cn.service.TagMessageService;
 import com.cn.service.TagService;
+import com.cn.service.UserFollowingService;
 import com.cn.service.UserService;
 
 @Controller
@@ -40,6 +42,16 @@ public class MessageController {
 	private LikeService likeService;
 	private TagService tagService;
 	private TagMessageService tagMessageService;
+	private UserFollowingService userFollowingService;
+
+	public UserFollowingService getUserFollowingService() {
+		return userFollowingService;
+	}
+
+	@Resource
+	public void setUserFollowingService(UserFollowingService userFollowingService) {
+		this.userFollowingService = userFollowingService;
+	}
 
 	public TagMessageService getTagMessageService() {
 		return tagMessageService;
@@ -86,7 +98,6 @@ public class MessageController {
 		this.messageService = messageService;
 	}
 
-	// 还没写完，这里收json的message需要重新写一个实体
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public @ResponseBody
@@ -135,31 +146,75 @@ public class MessageController {
 		return info = "上传成功";
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
-	public @ResponseBody
-	PaginationSupport<Message> showhomepage(
-			@RequestBody Fetchmessage_info fetchmessage_info) {
-		PaginationSupport<Message> ps = messageService.showhome(
-				fetchmessage_info.getUserid(),
-				fetchmessage_info.getStartindex());
+	public @ResponseBody PaginationSupport<Message> showhomepage(@RequestBody Fetchmessage_info fetchmessage_info) {
+		int userid=fetchmessage_info.getUserid();
+		PaginationSupport<Message> ps = messageService.showhome(userid,fetchmessage_info.getStartindex());
 		if (!ps.getData().iterator().hasNext())
-			ps.setMessage("返回失败");
+			ps.setMessage("fail");
 		else
-			ps.setMessage("返回成功");
+			ps.setMessage("success");
+		List<Message> data=new ArrayList<Message>();
+		Iterator iterator=ps.getData().iterator();
+		int size=ps.getData().size();
+		for(int i=0;i<size;i++)
+		{
+			Message message=(Message)iterator.next();
+			int messageid=message.getMessage_id();
+			int followingid=message.getUser().getUser_id();
+			Like like_exist=likeService.likeexist(userid, messageid);
+			if(like_exist!=null) message.setIsliked("true");
+			else message.setIsliked("false");
+			if(userid==followingid)
+			{
+				message.getUser().setIsfollowed("itself");
+			}
+			else
+			{
+				User_Following following_exist=userFollowingService.followexist(userid, followingid);
+				if(following_exist!=null)message.getUser().setIsfollowed("true");
+				else message.getUser().setIsfollowed("false");
+			}
+			data.add(message);
+		}
+		ps.setData(data);
 		return ps;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/following", method = RequestMethod.POST)
-	public @ResponseBody
-	PaginationSupport<Message> showfollowing(
-			@RequestBody Fetchmessage_info fetchmessage_info) {
-		PaginationSupport<Message> ps = messageService.showfollowing(
-				fetchmessage_info.getUserid(),
-				fetchmessage_info.getStartindex());
+	public @ResponseBody PaginationSupport<Message> showfollowing(@RequestBody Fetchmessage_info fetchmessage_info) 
+	{
+		int userid=fetchmessage_info.getUserid();
+		PaginationSupport<Message> ps = messageService.showfollowing(userid,fetchmessage_info.getStartindex());
 		if (!ps.getData().iterator().hasNext())
-			ps.setMessage("返回失败");
-		else
-			ps.setMessage("返回成功");
+			ps.setMessage("fail");
+		else ps.setMessage("success");
+		List<Message> data=new ArrayList<Message>();
+		Iterator iterator=ps.getData().iterator();
+		int size=ps.getData().size();
+		for(int i=0;i<size;i++)
+		{
+			Message message=(Message)iterator.next();
+			int messageid=message.getMessage_id();
+			int followingid=message.getUser().getUser_id();
+			Like like_exist=likeService.likeexist(userid, messageid);
+			if(like_exist!=null) message.setIsliked("true");
+			else message.setIsliked("false");
+			if(userid==followingid)
+			{
+				message.getUser().setIsfollowed("itself");
+			}
+			else
+			{
+				User_Following following_exist=userFollowingService.followexist(userid, followingid);
+				if(following_exist!=null)message.getUser().setIsfollowed("true");
+				else message.getUser().setIsfollowed("false");
+			}
+			data.add(message);
+		}
+		ps.setData(data);
 		return ps;
 	}
 
@@ -167,6 +222,7 @@ public class MessageController {
 	public @ResponseBody
 	String likemessage(@RequestBody Fetchmessage_info fetchmessage_info) {
 		String message = "notexist";
+		System.out.println("enter like");
 		int userid = fetchmessage_info.getUserid();
 		int messageid = fetchmessage_info.getMessageid();
 		User userEntity = userService.loadbyid(userid);
@@ -193,7 +249,6 @@ public class MessageController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody
 	String upload(@RequestParam("file") MultipartFile file,
