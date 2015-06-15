@@ -116,7 +116,6 @@ public class MessageController {
 		String date = dFormat.format(new Date());
 		message.setMessage_date(date);
 		// image
-
 		messageService.addMessage(message);
 		// tag
 		Message addedMessage = messageService.loadbydate(date);
@@ -142,15 +141,17 @@ public class MessageController {
 				tagMessageService.addTagMessage(tag_Message);
 			}
 		}
-
+		
 		return info = "上传成功";
 	}
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
 	public @ResponseBody PaginationSupport<Message> showhomepage(@RequestBody Fetchmessage_info fetchmessage_info) {
+		int visitid=fetchmessage_info.getVisitid();
 		int userid=fetchmessage_info.getUserid();
-		PaginationSupport<Message> ps = messageService.showhome(userid,fetchmessage_info.getStartindex());
+		System.out.println(fetchmessage_info.getStartindex());
+		PaginationSupport<Message> ps = messageService.showhome(visitid,fetchmessage_info.getStartindex());
 		if (!ps.getData().iterator().hasNext())
 			ps.setMessage("fail");
 		else
@@ -304,6 +305,7 @@ public class MessageController {
 
 			return info = "success";
 		} catch (Exception e) {
+			
 			return info;
 		}
 	}

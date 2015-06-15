@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Fetchmessage_info {
  int userid;
+ int visitid;
  int startindex;
  String tagname;
  int messageid;
@@ -14,6 +15,12 @@ public class Fetchmessage_info {
  private List<Tag> tag;
  private List<User> allFollowUsers;
  
+public int getVisitid() {
+	return visitid;
+}
+public void setVisitid(int visitid) {
+	this.visitid = visitid;
+}
 public List<User> getAllFollowUsers() {
 	return allFollowUsers;
 }
